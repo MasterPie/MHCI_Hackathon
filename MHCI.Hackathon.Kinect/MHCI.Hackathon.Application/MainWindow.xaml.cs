@@ -16,6 +16,7 @@ using System.Windows.Forms.Integration;
 using MHCI.Hackathon.App.Kinect;
 using IrrKlang;
 using System.IO;
+using System.Math;
 
 namespace MHCI.Hackathon.App
 {
@@ -55,6 +56,9 @@ namespace MHCI.Hackathon.App
             _engine = new ISoundEngine();
 
             //browser.Navigate("");
+            string curDir = Directory.GetCurrentDirectory();
+
+            browser.Navigate("http://localhost:3001");
 
             _song_layer1 = new Model.Song("Rhythm", "Rhythm.mp3");
             _song_layer2 = new Model.Song("Organs", "Organs.mp3");
@@ -62,23 +66,16 @@ namespace MHCI.Hackathon.App
             _song_layer4 = new Model.Song("Vocals", "Vocals.mp3");
 
             _sound_layer1 = this._engine.Play2D(_song_layer1.FileLocation, false);
-            System.Console.WriteLine("Playing: " + _song_layer1.FileLocation);
-            if (this._sound_layer1 == null)
-            {
-                throw new ArgumentException("Unable to play song");
-            }
+            //_sound_layer1.Volume = 0.5f;
 
-            //_sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
-            //_sound_layer2.Volume = 0;
-            string curDir = Directory.GetCurrentDirectory();
+            _sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
+            _sound_layer2.Volume = 0;
 
-            browser.Navigate("http://localhost:3001");
+            _sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
+            _sound_layer3.Volume = 0;
 
-            //_sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
-            //_sound_layer3.Volume = 0;
-
-            //_sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
-            //_sound_layer4.Volume = 0;
+            _sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
+            _sound_layer4.Volume = 0;
         }
 
 
@@ -93,6 +90,7 @@ namespace MHCI.Hackathon.App
             if (!isPlaying)
             {
                 _sound_layer1 = this._engine.Play2D(_song_layer1.FileLocation, false);
+                //_sound_layer1.Volume = 0.5f;
 
                 _sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
                 _sound_layer2.Volume = 0;
@@ -110,12 +108,75 @@ namespace MHCI.Hackathon.App
         {
             foreach (var action in e)
             {
-
+                switch (action.Player.Id)
+                {
+                    case 1:
+                        _sound_layer1.Volume = (float)action.Volume / 10;
+                        _sound_layer1.PlaybackSpeed = setPlaybackRate(action.Craziness);
+                        break;
+                    case 2:
+                        _sound_layer2.Volume = (float)action.Volume / 10;
+                        _sound_layer2.PlaybackSpeed = setPlaybackRate(action.Craziness);
+                        break;
+                    case 3:
+                        _sound_layer3.Volume = (float)action.Volume / 10;
+                        _sound_layer3.PlaybackSpeed = setPlaybackRate(action.Craziness);
+                        break;
+                    case 4:
+                        _sound_layer4.Volume = (float)action.Volume / 10;
+                        _sound_layer4.PlaybackSpeed = setPlaybackRate(action.Craziness);
+                        break;
+                    default:
+                        break;    
+                }
+                    
                 MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
                 //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
             }
         }
         #endregion
+
+        private float setPlaybackRate(double playbackRate)
+        {
+            int playbackRateint = (int) System.Math.Floor(playbackRate);
+            float newPlaybackRate = 1;
+            switch(playbackRateint)
+            {
+                case 1:
+                    newPlaybackRate = 0.6f;
+                    break; 
+                case 2:
+                    newPlaybackRate = 0.7f;
+                    break;
+                case 3:
+                    newPlaybackRate = 0.8f;
+                    break;
+                case 4:
+                    newPlaybackRate = 0.9f;
+                    break;
+                case 5:
+                    newPlaybackRate = 1.0f;
+                    break;
+                case 6:
+                    newPlaybackRate = 1.1f;
+                    break;
+                case 7:
+                    newPlaybackRate = 1.2f;
+                    break;
+                case 8:
+                    newPlaybackRate = 1.3f;
+                    break;
+                case 9:
+                    newPlaybackRate = 1.4f;
+                    break;
+                case 10:
+                    newPlaybackRate = 1.5f;
+                    break;
+                default:
+                    break;
+            }
+            return newPlaybackRate;
+        }
 
         #region WebKitBrowser Routines
         /// <summary>
