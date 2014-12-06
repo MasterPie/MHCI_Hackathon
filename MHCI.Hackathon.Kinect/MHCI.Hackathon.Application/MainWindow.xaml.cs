@@ -25,7 +25,19 @@ namespace MHCI.Hackathon.App
     {
         
         private IPlayerInput _playerInputEngine;
-        private Model.MusicPlayer _musicPlayer;
+        //private Model.MusicPlayer _musicPlayer;
+        private ISound _sound_layer1;
+        private ISound _sound_layer2;
+        private ISound _sound_layer3;
+        private ISound _sound_layer4;
+
+
+        Model.Song _song_layer1;
+        Model.Song _song_layer2;
+        Model.Song _song_layer3;
+        Model.Song _song_layer4;
+
+        private Boolean isPlaying;
 
         private ISoundEngine _engine;
 
@@ -39,15 +51,30 @@ namespace MHCI.Hackathon.App
             _playerInputEngine.PlayerJoined += _playerInputEngine_PlayerJoined;
             _playerInputEngine.PlayerLeft += _playerInputEngine_PlayerLeft;
 
-            browser.Navigate("");
+            _engine = new ISoundEngine();
 
-            String relativePath = "ChristmasSong.mp3";
-            var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string absolutePath = appDirectory + relativePath;
-            Model.Song song = new Model.Song("Song", absolutePath);
-            _musicPlayer = new Model.MusicPlayer();
+            //browser.Navigate("");
 
-            uint length = _musicPlayer.Play(song, false);
+            _song_layer1 = new Model.Song("Rhythm", "Rhythm.mp3");
+            _song_layer2 = new Model.Song("Organs", "Organs.mp3");
+            _song_layer3 = new Model.Song("Keyboards", "Keyboards.mp3");
+            _song_layer4 = new Model.Song("Vocals", "Vocals.mp3");
+
+            _sound_layer1 = this._engine.Play2D(_song_layer1.FileLocation, false);
+            System.Console.WriteLine("Playing: " + _song_layer1.FileLocation);
+            if (this._sound_layer1 == null)
+            {
+                throw new ArgumentException("Unable to play song");
+            }
+
+            //_sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
+            //_sound_layer2.Volume = 0;
+
+            //_sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
+            //_sound_layer3.Volume = 0;
+
+            //_sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
+            //_sound_layer4.Volume = 0;
         }
 
 
@@ -59,6 +86,19 @@ namespace MHCI.Hackathon.App
 
         void _playerInputEngine_PlayerJoined(object sender, int e)
         {
+            if (!isPlaying)
+            {
+                _sound_layer1 = this._engine.Play2D(_song_layer1.FileLocation, false);
+
+                _sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
+                _sound_layer2.Volume = 0;
+
+                _sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
+                _sound_layer3.Volume = 0;
+
+                _sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
+                _sound_layer4.Volume = 0;
+            }
             //throw new NotImplementedException();
         }
 
@@ -66,12 +106,7 @@ namespace MHCI.Hackathon.App
         {
             foreach (var action in e)
             {
-                //String relativePath = "../../../../../../../Desktop/ChristmasSong";
                 
-
-
-                //MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
-                //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
             }
         }
         #endregion
