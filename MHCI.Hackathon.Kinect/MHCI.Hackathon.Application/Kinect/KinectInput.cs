@@ -173,8 +173,8 @@ namespace MHCI.Hackathon.App.Kinect
         private double TransformToAppVolume(CameraSpacePoint bodyPosition)
         {
             var spineZPosition = bodyPosition.Z * 3.28084; //convert to feet
-            
-            return (int)spineZPosition;
+            Console.WriteLine("VOLUME {0}", (int)spineZPosition);
+            return (int)spineZPosition - 5;
         }
 
         private double TransformToAppBeats(int id, CameraSpacePoint bodyPosition)
@@ -196,7 +196,14 @@ namespace MHCI.Hackathon.App.Kinect
                 // y = 1 + (x-A)*(10-1)/(B-A)
                 //Console.WriteLine(totalDist * 100);
                 var scaledDist = totalDist * 100;
+
+                if (scaledDist > 10)
+                    scaledDist = 10;
+                if (scaledDist < 0)
+                    scaledDist = 0;
+
                 this._pastPosition[id] = bodyPosition;
+                Console.WriteLine("VELOCITY {0}", scaledDist);
                 return scaledDist;
             }
             else
