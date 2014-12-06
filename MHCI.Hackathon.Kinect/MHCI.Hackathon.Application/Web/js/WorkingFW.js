@@ -62,6 +62,8 @@
       }
     };
 
+    console.log(playerInfo.player + " " + playerInfo.volume + " " + playerInfo.craziness + " " + playerInfo.active);
+
     var clearValues = function () {
       playerInfo.craziness = 0;
       playerInfo.volume = 0;
