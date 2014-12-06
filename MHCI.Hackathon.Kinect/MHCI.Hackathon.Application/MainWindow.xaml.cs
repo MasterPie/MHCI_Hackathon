@@ -78,20 +78,20 @@ namespace MHCI.Hackathon.App
             switch (e)
             {
                 case 1:
-                    _sound_layer1.Volume = 0.1f;
-                    _sound_layer1.PlaybackSpeed = 0.6f;
+                    _sound_layer1.Volume = 0;
+                    _sound_layer1.PlaybackSpeed = 1f;
                     break;
                 case 2:
-                    _sound_layer2.Volume = 0.1f;
-                    _sound_layer2.PlaybackSpeed = 0.6f;
+                    _sound_layer2.Volume = 0f;
+                    _sound_layer2.PlaybackSpeed = 1f;
                     break;
                 case 3:
-                    _sound_layer3.Volume = 0.1f;
-                    _sound_layer3.PlaybackSpeed = 0.6f;
+                    _sound_layer3.Volume = 0f;
+                   _sound_layer3.PlaybackSpeed = 1f;
                     break;
                 case 4:
-                    _sound_layer4.Volume = 0.1f;
-                    _sound_layer4.PlaybackSpeed = 0.6f;
+                    _sound_layer4.Volume = 0f;
+                    _sound_layer4.PlaybackSpeed = 1f;
                     break;
                 default:
                     break;
@@ -151,19 +151,19 @@ namespace MHCI.Hackathon.App
                 switch (action.Player.Id)
                 {
                     case 1:
-                        _sound_layer1.Volume = (float)action.Volume / 10;
+                        _sound_layer1.Volume = setVolume(action.Volume);
                         _sound_layer1.PlaybackSpeed = setPlaybackRate(action.Craziness);
                         break;
                     case 2:
-                        _sound_layer2.Volume = (float)action.Volume / 10;
+                        _sound_layer2.Volume = setVolume(action.Volume);
                         _sound_layer2.PlaybackSpeed = setPlaybackRate(action.Craziness);
                         break;
                     case 3:
-                        _sound_layer3.Volume = (float)action.Volume / 10;
+                        _sound_layer3.Volume = setVolume(action.Volume);
                         _sound_layer3.PlaybackSpeed = setPlaybackRate(action.Craziness);
                         break;
                     case 4:
-                        _sound_layer4.Volume = (float)action.Volume / 10;
+                        _sound_layer4.Volume = setVolume(action.Volume);
                         _sound_layer4.PlaybackSpeed = setPlaybackRate(action.Craziness);
                         break;
                     default:
@@ -178,7 +178,7 @@ namespace MHCI.Hackathon.App
 
         private float setPlaybackRate(double playbackRate)
         {
-            int playbackRateint = (int) System.Math.Floor(playbackRate);
+            int playbackRateint = (int) playbackRate;
             float newPlaybackRate = 1;
             switch(playbackRateint)
             {
@@ -216,6 +216,48 @@ namespace MHCI.Hackathon.App
                     break;
             }
             return newPlaybackRate;
+        }
+
+        private float setVolume(double volume)
+        {
+            int volumeInt = (int)volume;
+            float newVolume = 1;
+            switch (volumeInt)
+            {
+                case 1:
+                    newVolume = 0.6f;
+                    break;
+                case 2:
+                    newVolume = 0.7f;
+                    break;
+                case 3:
+                    newVolume = 0.8f;
+                    break;
+                case 4:
+                    newVolume = 0.9f;
+                    break;
+                case 5:
+                    newVolume = 1.0f;
+                    break;
+                case 6:
+                    newVolume = 1.1f;
+                    break;
+                case 7:
+                    newVolume = 1.2f;
+                    break;
+                case 8:
+                    newVolume = 1.3f;
+                    break;
+                case 9:
+                    newVolume = 1.4f;
+                    break;
+                case 10:
+                    newVolume = 1.5f;
+                    break;
+                default:
+                    break;
+            }
+            return newVolume;
         }
 
         #region WebKitBrowser Routines
