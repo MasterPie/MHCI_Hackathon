@@ -51,10 +51,15 @@ namespace MHCI.Hackathon.App
         {
             foreach (var action in e)
             {
-                Model.Song song = new Model.Song("Song", "../../../../../../../Desktop/bells_gm");
-                Model.MusicPlayer player = new Model.MusicPlayer();
+                //String relativePath = "../../../../../../../Desktop/ChristmasSong";
+                String relativePath = "ChristmasSong";
+                var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string absolutePath = appDirectory + relativePath;
+                Model.Song song = new Model.Song("Song", absolutePath);
+                Model.MusicPlayer musicPlayer = new Model.MusicPlayer();
 
-                player.Play(song);
+                musicPlayer.Play(song, true);
+
 
                 MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
                 //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);

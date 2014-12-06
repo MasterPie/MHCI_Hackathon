@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="irrKlang.NET4, Version=1.0.5235.21387, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="irrKlang.NET4, Version=1.0.4534.25937, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\irrKlang.NET4.dll</HintPath>
     </Reference>
@@ -80,7 +80,7 @@
     <Compile Include="Model\Action.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\MusicPlayer.cs" />
-    <Compile Include="Model\Song.cs" />
+    <Compile Include="Song.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -126,7 +126,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)lib\*.*" "$(SolutionDir)$(OutDir)" /Y /D</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(SolutionDir)music\*.*" "$(SolutionDir)$(OutDir)" /Y /D</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

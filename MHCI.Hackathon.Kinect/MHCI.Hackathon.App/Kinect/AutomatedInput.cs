@@ -27,13 +27,13 @@ namespace MHCI.Hackathon.App.Kinect
             };
 
             List<Model.Action> actions = new List<Model.Action>();
+            actions.Add(actionBlah);
             
             if (PlayerActionsChanged != null)
             {
                 PlayerActionsChanged(this, actions);
             }
         }
-
 
         public event EventHandler<IEnumerable<Model.Action>> PlayerActionsChanged;
         public event EventHandler<int> PlayerJoined;
