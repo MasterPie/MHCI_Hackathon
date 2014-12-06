@@ -38,6 +38,7 @@ namespace MHCI.Hackathon.App.Kinect
             _reader.MultiSourceFrameArrived += _reader_MultiSourceFrameArrived;
         }
 
+        #region Handle Input
         void _reader_MultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
         {
             var reference = e.FrameReference.AcquireFrame();
@@ -67,7 +68,6 @@ namespace MHCI.Hackathon.App.Kinect
                 this.PlayerActionsChanged(this, actions);
             }
         }
-
         private void HandleBody(Body body)
         {
             if (body == null)
@@ -103,6 +103,18 @@ namespace MHCI.Hackathon.App.Kinect
             else
                 this._gameState[playerId] = action;
         }
+
+        private bool IsPlaying(CameraSpacePoint bodyPosition)
+        {
+            var spineZPosition = bodyPosition.Z;
+            var xPosition = bodyPosition.X;
+            var yPosition = bodyPosition.Y;
+            //Console.WriteLine(xPosition);
+            return spineZPosition > 1.55 && spineZPosition < 4.5 && xPosition > -1 && xPosition < 1;
+        }
+        #endregion
+
+        #region Add / Remove players
 
         private int AddPlayerIfNewOrGetExistingId(Body body)
         {
@@ -154,14 +166,9 @@ namespace MHCI.Hackathon.App.Kinect
             return false;
         }
 
-        private bool IsPlaying(CameraSpacePoint bodyPosition)
-        {
-            var spineZPosition = bodyPosition.Z;
-            var xPosition = bodyPosition.X;
-            var yPosition = bodyPosition.Y;
-            //Console.WriteLine(xPosition);
-            return spineZPosition > 1.55 && spineZPosition < 4.5 && xPosition > -1 && xPosition < 1;
-        }
+        #endregion
+
+        #region Transformations
 
         private double TransformToAppVolume(CameraSpacePoint bodyPosition)
         {
@@ -198,7 +205,7 @@ namespace MHCI.Hackathon.App.Kinect
                 return 5;
             }
         }
-
+        #endregion
 
         public event EventHandler<IEnumerable<Model.Action>> PlayerActionsChanged;
         public event EventHandler<int> PlayerJoined;

@@ -16,7 +16,6 @@ using System.Windows.Forms.Integration;
 using MHCI.Hackathon.App.Kinect;
 using IrrKlang;
 using System.IO;
-using System.Math;
 
 namespace MHCI.Hackathon.App
 {
@@ -90,7 +89,7 @@ namespace MHCI.Hackathon.App
         #region Kinect Events
         void _playerInputEngine_PlayerLeft(object sender, int e)
         {
-            Console.WriteLine("Player left: " + e);
+            //Console.WriteLine("Player left: " + e);
             MakeJSCall("playerLeft", e);
         }
 
@@ -98,16 +97,16 @@ namespace MHCI.Hackathon.App
         {
             if (!isPlaying)
             {
-                _sound_layer1 = this._engine.Play2D(_song_layer1.FileLocation, false);
+                //_sound_layer1 = this._engine.Play2D(_song_layer1.FileLocation, false);
                 //_sound_layer1.Volume = 0.5f;
 
-                _sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
+               // _sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
                 _sound_layer2.Volume = 0;
 
-                _sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
+               // _sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
                 _sound_layer3.Volume = 0;
 
-                _sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
+              //  _sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
                 _sound_layer4.Volume = 0;
             }
             //throw new NotImplementedException();

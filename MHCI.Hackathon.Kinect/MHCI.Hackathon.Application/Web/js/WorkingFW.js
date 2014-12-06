@@ -437,7 +437,7 @@ function acceptAction(playerNum, craziness, volume) {
 }
 
 function playerLeft(playerNum) {
-    //alert("Player left!!! " + playerNum);
+    alert("Player left!!! " + playerNum);
     if (playerNum == 1)
         a.clearValues();
     else if (playerNum == 2)
