@@ -70,8 +70,7 @@
 
       // add the canvas in
       document.body.appendChild(mainCanvas);
-      // document.addEventListener('mouseup', createFirework, true);
-      // document.addEventListener('touchend', createFirework, true);
+      document.addEventListener('mouseup', createFirework, true);
       setInterval(function(){createFirework();},2000);
 
       if (playerInfo.player === 1) {
@@ -183,12 +182,7 @@
           // if the firework isn't using physics
           // then we know we can safely(!) explode it... yeah.
           if(!firework.usePhysics) {
-
-            // if(Math.random() < 0.8) {
-            //   FireworkExplosions.star(firework);
-            // } else {
-              FireworkExplosions.circle(firework, playerInfo, Fireworks);
-            // }
+            FireworkExplosions.circle(firework, playerInfo, Fireworks);
           }
         }
 
@@ -211,15 +205,11 @@
         new Particle(
           // position
           {
-            // x: pos.x || viewportWidth * 0.5,
             x: pos.x || Math.floor(Math.random()*(viewportWidth-100)) + 100,
             y: pos.y || viewportHeight + 10
           },
 
           // target
-          // {
-          //   y: target.y || 150 + Math.random() * 100
-          // },
           {
             y: target
           },        
@@ -230,7 +220,6 @@
             y: vel.y || 0
           },
 
-          // color || Math.floor(Math.random() * 100) * 12,
           color,
 
           usePhysics)
@@ -400,8 +389,6 @@ var FireworkExplosions = {
         firework.pos,
         null,
         {
-          // x: Math.cos(particleAngle) * randomVelocity,
-          // y: Math.sin(particleAngle) * randomVelocity
           x: Math.cos(particleAngle) * playerVelocity,
           y: Math.sin(particleAngle) * playerVelocity
         },
@@ -416,24 +403,19 @@ var a, b, c, d;
 // Go
 window.onload = function() {
    a = create();
-   a.update(1, 5, 2);
+   a.update(1, 0, 0);
    a.initialize();
-   // a.getElementById("canvas").style.position="relative";
-   // a.getElementById("canvas").style.zIndex="4";
 
    b = create();
-   // b.mainCanvas.style.zindex="3";
-   b.update(2, 5, 4);
+   b.update(2, 0, 0);
    b.initialize();
 
    c = create();
-   // c.mainCanvas.style.zindex="2";
-   c.update(3, 5, 6);
+   c.update(3, 0, 0);
    c.initialize();
 
    d = create();
-   // d.mainCanvas.style.zindex="1";
-   d.update(4, 5, 8);
+   d.update(4, 0, 0);
    d.initialize();
 };
 
@@ -446,6 +428,18 @@ function acceptAction(playerNum, craziness, volume) {
         c.update(3, craziness, volume);
     else if (playerNum == 4)
         d.update(4, craziness, volume);
+}
+
+function playerLeft(playerNum) {
+    //alert("Player left!!! " + playerNum);
+    if (playerNum == 1)
+        a.update(1, 0, 0);
+    else if (playerNum == 2)
+        b.update(2, 0, 0);
+    else if (playerNum == 3)
+        c.update(3, 0, 0);
+    else if (playerNum == 4)
+        d.update(4, 0, 0);
 }
 
 

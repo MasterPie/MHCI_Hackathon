@@ -18,6 +18,7 @@ namespace MHCI.Hackathon.App.Kinect
             this._timer.Start();
         }
 
+
         void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             Model.Action actionBlah = new Model.Action(){
