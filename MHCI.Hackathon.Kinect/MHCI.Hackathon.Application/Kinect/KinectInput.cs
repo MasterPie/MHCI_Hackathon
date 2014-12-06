@@ -15,7 +15,7 @@ namespace MHCI.Hackathon.App.Kinect
         IList<Body> _bodies;
 
         Dictionary<int, Model.Action> _gameState;
-        Dictionary<int, Tuple<CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint>> _pastPosition;
+        Dictionary<int, Tuple<CameraSpacePoint, CameraSpacePoint, CameraSpacePoint>> _pastPosition;
 
         Dictionary<int, int> _playerMap;
 
@@ -23,7 +23,7 @@ namespace MHCI.Hackathon.App.Kinect
         {
             _sensor = KinectSensor.GetDefault();
             _gameState = new Dictionary<int, Model.Action>();
-            _pastPosition = new Dictionary<int, Tuple<CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint>>();
+            _pastPosition = new Dictionary<int, Tuple<CameraSpacePoint, CameraSpacePoint, CameraSpacePoint>>();
             _playerMap = new Dictionary<int, int>();
 
             if (_sensor != null)
@@ -31,9 +31,7 @@ namespace MHCI.Hackathon.App.Kinect
                 _sensor.Open();
             }
 
-            _reader = _sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Color |
-                                             FrameSourceTypes.Depth |
-                                             FrameSourceTypes.Infrared |
+            _reader = _sensor.OpenMultiSourceFrameReader(
                                              FrameSourceTypes.Body);
             _reader.MultiSourceFrameArrived += _reader_MultiSourceFrameArrived;
         }
@@ -68,6 +66,7 @@ namespace MHCI.Hackathon.App.Kinect
                 this.PlayerActionsChanged(this, actions);
             }
         }
+        
         private void HandleBody(Body body)
         {
             if (body == null)
@@ -160,8 +159,10 @@ namespace MHCI.Hackathon.App.Kinect
             {
                 int id = this._playerMap[playerId];
                 this._playerMap.Remove(playerId);
-                this._gameState.Remove(id);
-                this._pastPosition.Remove(id);
+                //this._gameState.Remove(id);
+                //this._pastPosition.Remove(id);
+                this._gameState.Clear();
+                this._pastPosition.Clear();
                 Console.WriteLine("[{0}] Removed player {1} at time {2}", playerId, id, DateTime.Now.ToShortTimeString());
 
                 if (PlayerLeft != null)
@@ -199,14 +200,14 @@ namespace MHCI.Hackathon.App.Kinect
                 var pastSpinePosition = _pastPosition[id].Item1;
                 var pastHandLeftPosition = _pastPosition[id].Item2;
                 var pastHandRightPosition = _pastPosition[id].Item3;
-                var pastAnkleLeftPosition = _pastPosition[id].Item4;
-                var pastAnkleRightPosition = _pastPosition[id].Item5;
+                //var pastAnkleLeftPosition = _pastPosition[id].Item4;
+                //var pastAnkleRightPosition = _pastPosition[id].Item5;
 
                 var xSpineDist = GetDistance(pastSpinePosition, spinePosition);
                 var xHandLeftDist = GetDistance(pastHandLeftPosition, handLeftPosition);
                 var xHandRightDist = GetDistance(pastHandRightPosition, handRightPosition);
-                var xAnkleLeftDist = GetDistance(pastAnkleLeftPosition, ankleLeftPosition);
-                var xAnkleRightDist = GetDistance(pastAnkleRightPosition, ankleRightPosition);
+                //var xAnkleLeftDist = GetDistance(pastAnkleLeftPosition, ankleLeftPosition);
+                //var xAnkleRightDist = GetDistance(pastAnkleRightPosition, ankleRightPosition);
 
                 var totalDist = xSpineDist + xHandLeftDist + xHandRightDist;// +xAnkleLeftDist + xAnkleRightDist;
                 totalDist = totalDist * 3.28084F;
@@ -221,24 +222,20 @@ namespace MHCI.Hackathon.App.Kinect
                 if (scaledDist < 0)
                     scaledDist = 0;
 
-                this._pastPosition[id] = new Tuple<CameraSpacePoint,CameraSpacePoint,CameraSpacePoint,CameraSpacePoint,CameraSpacePoint>(
+                this._pastPosition[id] = new Tuple<CameraSpacePoint,CameraSpacePoint,CameraSpacePoint>(
                     spinePosition,
                     handLeftPosition,
-                    handRightPosition, 
-                    ankleLeftPosition, 
-                    ankleRightPosition
+                    handRightPosition
                 );
                 //Console.WriteLine("VELOCITY {0}", scaledDist);
                 return scaledDist;
             }
             else
             {
-                this._pastPosition.Add(id, new Tuple<CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint>(
+                this._pastPosition.Add(id, new Tuple<CameraSpacePoint, CameraSpacePoint, CameraSpacePoint>(
                     spinePosition,
                     handLeftPosition,
-                    handRightPosition,
-                    ankleLeftPosition,
-                    ankleRightPosition
+                    handRightPosition
                 ));
                 return 5;
             }

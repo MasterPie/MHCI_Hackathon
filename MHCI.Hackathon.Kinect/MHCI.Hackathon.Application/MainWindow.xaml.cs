@@ -58,11 +58,11 @@ namespace MHCI.Hackathon.App
             browser.Navigate("http://localhost:3001");
             browser.Navigated += browser_Navigated;
 
-            //_song_layer1 = new Model.Song("Rhythm", "Rhythm.mp3");
+          //  _song_layer1 = new Model.Song("Rhythm", "Rhythm.mp3");
             _song_layer1 = new Model.Song("Vocals", "Vocals.mp3");
             _song_layer2 = new Model.Song("Organs", "Organs.mp3");
             _song_layer3 = new Model.Song("Keyboards", "Keyboards.mp3");
-            _song_layer4 = new Model.Song("Vocals", "Vocals.mp3");
+            _song_layer4 = new Model.Song("Rhythm", "Rhythm.mp3");
 
         }
 
@@ -212,6 +212,7 @@ namespace MHCI.Hackathon.App
                     newPlaybackRate = 1.4f;
                     break;
                 default:
+                    newPlaybackRate = 1.0f;
                     break;
             }
             return newPlaybackRate;
