@@ -19,7 +19,8 @@ namespace MHCI.Hackathon.App
 
         public App()
         {
-            _playerInputEngine = new KinectInput();
+            //_playerInputEngine = new KinectInput();
+            _playerInputEngine = new AutomatedInput();
             _playerInputEngine.PlayerActionsChanged += _playerInputEngine_PlayerActionsChanged;
             _playerInputEngine.PlayerJoined += _playerInputEngine_PlayerJoined;
             _playerInputEngine.PlayerLeft += _playerInputEngine_PlayerLeft;
@@ -39,6 +40,11 @@ namespace MHCI.Hackathon.App
         {
             foreach (var action in e)
             {
+                Model.Song song = new Model.Song("Song", "../../../../../../../Desktop/bells_gm");
+                Model.MusicPlayer player = new Model.MusicPlayer();
+
+                player.Play(song);
+
                 //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
             }
         }

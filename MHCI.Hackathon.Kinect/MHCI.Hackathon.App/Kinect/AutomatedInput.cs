@@ -20,8 +20,18 @@ namespace MHCI.Hackathon.App.Kinect
 
         void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            Model.Action actionBlah = new Model.Action(){
+                Player = new Model.Player() { Id=1},
+                Volume = 5,
+                Craziness = 5
+            };
+
+            List<Model.Action> actions = new List<Model.Action>();
             
-            
+            if (PlayerActionsChanged != null)
+            {
+                PlayerActionsChanged(this, actions);
+            }
         }
 
 
