@@ -14,3 +14,5 @@ C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MH
 C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MHCI.Hackathon.App.csproj.GenerateResource.Cache
 C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MHCI.Hackathon.App.exe
 C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MHCI.Hackathon.App.pdb
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\bin\Debug\WebKitBrowser.dll
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MHCI.Hackathon.App.csprojResolveAssemblyReference.cache
