@@ -56,29 +56,14 @@ namespace MHCI.Hackathon.App
             _engine = new ISoundEngine();
 
             //browser.Navigate("");
+            browser.Navigate("http://localhost:3001");
+            browser.Navigated += browser_Navigated;
 
             _song_layer1 = new Model.Song("Rhythm", "Rhythm.mp3");
             _song_layer2 = new Model.Song("Organs", "Organs.mp3");
             _song_layer3 = new Model.Song("Keyboards", "Keyboards.mp3");
             _song_layer4 = new Model.Song("Vocals", "Vocals.mp3");
 
-            _sound_layer1 = this._engine.Play2D(_song_layer1.FileLocation, false);
-            System.Console.WriteLine("Playing: " + _song_layer1.FileLocation);
-            if (this._sound_layer1 == null)
-            {
-                throw new ArgumentException("Unable to play song");
-            }
-
-            _sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
-            _sound_layer2.Volume = 0;
-
-            _sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
-            _sound_layer3.Volume = 0;
-            browser.Navigate("http://localhost:3001");
-            browser.Navigated += browser_Navigated;
-
-            _sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
-            _sound_layer4.Volume = 0;
         }
 
         bool canMakeCalls = false;
@@ -90,6 +75,27 @@ namespace MHCI.Hackathon.App
         #region Kinect Events
         void _playerInputEngine_PlayerLeft(object sender, int e)
         {
+            switch (e)
+            {
+                case 1:
+                    _sound_layer1.Volume = 0.1f;
+                    _sound_layer1.PlaybackSpeed = 0.6f;
+                    break;
+                case 2:
+                    _sound_layer2.Volume = 0.1f;
+                    _sound_layer2.PlaybackSpeed = 0.6f;
+                    break;
+                case 3:
+                    _sound_layer3.Volume = 0.1f;
+                    _sound_layer3.PlaybackSpeed = 0.6f;
+                    break;
+                case 4:
+                    _sound_layer4.Volume = 0.1f;
+                    _sound_layer4.PlaybackSpeed = 0.6f;
+                    break;
+                default:
+                    break;
+            }
             Console.WriteLine("Player left: " + e);
             MakeJSCall("playerLeft", e);
         }
@@ -99,7 +105,6 @@ namespace MHCI.Hackathon.App
             if (!isPlaying)
             {
                 _sound_layer1 = this._engine.Play2D(_song_layer1.FileLocation, false);
-                //_sound_layer1.Volume = 0.5f;
 
                 _sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
                 _sound_layer2.Volume = 0;
@@ -109,6 +114,32 @@ namespace MHCI.Hackathon.App
 
                 _sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
                 _sound_layer4.Volume = 0;
+
+                isPlaying = true;
+            }
+            else
+            {
+                switch (e)
+                {
+                    case 1:
+                        _sound_layer1.Volume = 1;
+                        _sound_layer1.PlaybackSpeed = 1.0f;
+                        break;
+                    case 2:
+                        _sound_layer2.Volume = 1;
+                        _sound_layer2.PlaybackSpeed = 1.0f;
+                        break;
+                    case 3:
+                        _sound_layer3.Volume = 1;
+                        _sound_layer3.PlaybackSpeed = 1.0f;
+                        break;
+                    case 4:
+                        _sound_layer4.Volume = 1;
+                        _sound_layer4.PlaybackSpeed = 1.0f;
+                        break;
+                    default:
+                        break;
+                }
             }
             //throw new NotImplementedException();
         }
