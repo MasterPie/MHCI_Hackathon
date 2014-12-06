@@ -27,6 +27,8 @@ namespace MHCI.Hackathon.App
         private IPlayerInput _playerInputEngine;
         private Model.MusicPlayer _musicPlayer;
 
+        private ISoundEngine _engine;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,6 +39,8 @@ namespace MHCI.Hackathon.App
             _playerInputEngine.PlayerJoined += _playerInputEngine_PlayerJoined;
             _playerInputEngine.PlayerLeft += _playerInputEngine_PlayerLeft;
 
+            browser.Navigate("");
+
             String relativePath = "ChristmasSong.mp3";
             var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string absolutePath = appDirectory + relativePath;
@@ -44,7 +48,6 @@ namespace MHCI.Hackathon.App
             _musicPlayer = new Model.MusicPlayer();
 
             uint length = _musicPlayer.Play(song, false);
-            
         }
 
 
