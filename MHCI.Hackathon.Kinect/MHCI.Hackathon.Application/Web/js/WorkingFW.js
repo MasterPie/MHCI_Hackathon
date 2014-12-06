@@ -31,8 +31,9 @@
     fireworkContext = null,
     viewportWidth = 0,
     viewportHeight = 0,
-    playerTarget = null
-    playerColor = null;
+    playerTarget = null,
+    playerColor = null,
+    isExploding = false;
 
     var playerInfo = {
       player: null,
@@ -49,9 +50,15 @@
       playerInfo.active = active;
 
       if(playerInfo.active == true) {
-        var explode = setInterval(function(){createFirework();},2000);
+        if (isExploding == false) {
+          var explode = setInterval(function(){createFirework();},2000);
+          isExploding = true;
+        } else {
+          return;
+        }
       } else {
         clearInterval(explode);
+        isExploding = false;
       }
     };
 
@@ -447,13 +454,13 @@ function acceptAction(playerNum, craziness, volume) {
 
 function playerLeft(playerNum) {
     if (playerNum == 1)
-        a.updateValues(1, 0, 0, false)
+        a.updateValues(1, 0, 0, false);
     else if (playerNum == 2)
-        b.clearValues();
+        b.updateValues(2, 0, 0, false);
     else if (playerNum == 3)
-        c.clearValues();
+        c.updateValues(3, 0, 0, false);
     else if (playerNum == 4)
-        d.clearValues();
+        d.updateValues(4, 0, 0, false);
 }
 
 // acceptAction(1,10,10);
