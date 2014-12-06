@@ -437,8 +437,10 @@ function acceptAction(playerNum, craziness, volume) {
 }
 
 function playerLeft(playerNum) {
-    if (playerNum == 1)
+    if (playerNum == 1) {
+        //alert("CLEAR VALUES! " + playerNum);
         a.clearValues();
+    }
     else if (playerNum == 2)
         b.clearValues();
     else if (playerNum == 3)

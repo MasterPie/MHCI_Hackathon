@@ -80,12 +80,7 @@ namespace MHCI.Hackathon.App
             _sound_layer4.Volume = 0;
         }
 
-        bool canMakeCalls = false;
-        void browser_Navigated(object sender, NavigationEventArgs e)
-        {
-            canMakeCalls = true;
-        }
-
+      
         #region Kinect Events
         void _playerInputEngine_PlayerLeft(object sender, int e)
         {
@@ -187,6 +182,14 @@ namespace MHCI.Hackathon.App
         }
 
         #region WebKitBrowser Routines
+
+        bool canMakeCalls = false;
+        void browser_Navigated(object sender, NavigationEventArgs e)
+        {
+            canMakeCalls = true;
+        }
+
+
         /// <summary>
         /// Sends javascript calls to the underlying webkit engine
         /// </summary>
