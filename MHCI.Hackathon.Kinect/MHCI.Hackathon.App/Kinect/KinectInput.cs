@@ -8,7 +8,7 @@ using Microsoft.Kinect;
 
 namespace MHCI.Hackathon.App.Kinect
 {
-    public class KinectInput
+    public class KinectInput : IPlayerInput
     {
         KinectSensor _sensor;
         MultiSourceFrameReader _reader;
@@ -140,5 +140,7 @@ namespace MHCI.Hackathon.App.Kinect
 
 
         public event EventHandler<IEnumerable<Model.Action>> PlayerActionsChanged;
+        public event EventHandler<int> PlayerJoined;
+        public event EventHandler<int> PlayerLeft;
     }
 }
