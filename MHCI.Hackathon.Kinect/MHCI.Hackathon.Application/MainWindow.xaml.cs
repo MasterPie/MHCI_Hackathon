@@ -176,35 +176,38 @@ namespace MHCI.Hackathon.App
             float newPlaybackRate = 1;
             switch(playbackRateint)
             {
+                case 0:
+                    newPlaybackRate = 0.5f;
+                    break;
                 case 1:
-                    newPlaybackRate = 0.6f;
+                    newPlaybackRate = 0.5f;
                     break; 
                 case 2:
-                    newPlaybackRate = 0.7f;
+                    newPlaybackRate = 0.5f;
                     break;
                 case 3:
-                    newPlaybackRate = 0.8f;
+                    newPlaybackRate = 0.7f;
                     break;
                 case 4:
-                    newPlaybackRate = 0.9f;
+                    newPlaybackRate = 0.7f;
                     break;
                 case 5:
                     newPlaybackRate = 1.0f;
                     break;
                 case 6:
-                    newPlaybackRate = 1.1f;
+                    newPlaybackRate = 1.0f;
                     break;
                 case 7:
-                    newPlaybackRate = 1.2f;
+                    newPlaybackRate = 1.0f;
                     break;
                 case 8:
-                    newPlaybackRate = 1.3f;
+                    newPlaybackRate = 1.1f;
                     break;
                 case 9:
                     newPlaybackRate = 1.4f;
                     break;
                 case 10:
-                    newPlaybackRate = 1.5f;
+                    newPlaybackRate = 1.4f;
                     break;
                 default:
                     break;

@@ -15,7 +15,7 @@ namespace MHCI.Hackathon.App.Kinect
         IList<Body> _bodies;
 
         Dictionary<int, Model.Action> _gameState;
-        Dictionary<int, CameraSpacePoint> _pastPosition;
+        Dictionary<int, Tuple<CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint>> _pastPosition;
 
         Dictionary<int, int> _playerMap;
 
@@ -23,7 +23,7 @@ namespace MHCI.Hackathon.App.Kinect
         {
             _sensor = KinectSensor.GetDefault();
             _gameState = new Dictionary<int, Model.Action>();
-            _pastPosition = new Dictionary<int, CameraSpacePoint>();
+            _pastPosition = new Dictionary<int, Tuple<CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint>>();
             _playerMap = new Dictionary<int, int>();
 
             if (_sensor != null)
@@ -88,7 +88,7 @@ namespace MHCI.Hackathon.App.Kinect
             int playerId = AddPlayerIfNewOrGetExistingId(body);
 
             var volumeNumber = TransformToAppVolume(spine.Position);
-            var beatNumber = TransformToAppBeats(playerId,spine.Position);
+            var beatNumber = TransformToAppBeats(playerId,body);
 
             Model.Action action = new Model.Action()
             {
@@ -178,41 +178,71 @@ namespace MHCI.Hackathon.App.Kinect
             return Math.Abs(volume);
         }
 
-        private double TransformToAppBeats(int id, CameraSpacePoint bodyPosition)
+        private double TransformToAppBeats(int id, Body body)
         {
-            var spineZPosition = bodyPosition.Z;
+            var spinePosition = body.Joints.Single(j => j.Key == JointType.SpineMid).Value.Position;
+            var handLeftPosition = body.Joints.Single(j => j.Key == JointType.HandLeft).Value.Position;
+            var handRightPosition = body.Joints.Single(j => j.Key == JointType.HandRight).Value.Position;
+            var ankleLeftPosition = body.Joints.Single(j => j.Key == JointType.AnkleLeft).Value.Position;
+            var ankleRightPosition = body.Joints.Single(j => j.Key == JointType.AnkleRight).Value.Position;
 
             if (this._pastPosition.ContainsKey(id))
             {
-                var pastPosition = _pastPosition[id];
+                var pastSpinePosition = _pastPosition[id].Item1;
+                var pastHandLeftPosition = _pastPosition[id].Item2;
+                var pastHandRightPosition = _pastPosition[id].Item3;
+                var pastAnkleLeftPosition = _pastPosition[id].Item4;
+                var pastAnkleRightPosition = _pastPosition[id].Item5;
 
-                var xDist = Math.Abs(pastPosition.X - bodyPosition.X);
-                var yDist = Math.Abs(pastPosition.Y - bodyPosition.Y);
-                var zDist = Math.Abs(pastPosition.Z - bodyPosition.Z);
+                var xSpineDist = GetDistance(pastSpinePosition, spinePosition);
+                var xHandLeftDist = GetDistance(pastHandLeftPosition, handLeftPosition);
+                var xHandRightDist = GetDistance(pastHandRightPosition, handRightPosition);
+                var xAnkleLeftDist = GetDistance(pastAnkleLeftPosition, ankleLeftPosition);
+                var xAnkleRightDist = GetDistance(pastAnkleRightPosition, ankleRightPosition);
 
-                var totalDist = xDist + yDist + zDist;
+                var totalDist = xSpineDist + xHandLeftDist + xHandRightDist;// +xAnkleLeftDist + xAnkleRightDist;
                 totalDist = totalDist * 3.28084F;
                 //min 1.3
                 //max 2
                 // y = 1 + (x-A)*(10-1)/(B-A)
                 //Console.WriteLine(totalDist * 100);
-                var scaledDist = (totalDist * 100 - 5)* 1.5;
+                var scaledDist = (totalDist * 100 - 7);
 
                 if (scaledDist > 10)
                     scaledDist = 10;
                 if (scaledDist < 0)
                     scaledDist = 0;
 
-                this._pastPosition[id] = bodyPosition;
+                this._pastPosition[id] = new Tuple<CameraSpacePoint,CameraSpacePoint,CameraSpacePoint,CameraSpacePoint,CameraSpacePoint>(
+                    spinePosition,
+                    handLeftPosition,
+                    handRightPosition, 
+                    ankleLeftPosition, 
+                    ankleRightPosition
+                );
                 Console.WriteLine("VELOCITY {0}", scaledDist);
                 return scaledDist;
             }
             else
             {
-                this._pastPosition.Add(id, bodyPosition);
+                this._pastPosition.Add(id, new Tuple<CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint, CameraSpacePoint>(
+                    spinePosition,
+                    handLeftPosition,
+                    handRightPosition,
+                    ankleLeftPosition,
+                    ankleRightPosition
+                ));
                 return 5;
             }
         }
+
+        private double GetDistance(CameraSpacePoint p1, CameraSpacePoint p2)
+        {
+            return Math.Abs(p1.X - p2.X)+
+            Math.Abs(p1.Y - p2.Y)+
+            Math.Abs(p1.Z - p2.Z);
+        }
+
         #endregion
 
         public event EventHandler<IEnumerable<Model.Action>> PlayerActionsChanged;
