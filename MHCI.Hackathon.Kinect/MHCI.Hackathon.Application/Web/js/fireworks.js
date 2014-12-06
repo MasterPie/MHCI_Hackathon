@@ -20,13 +20,19 @@
  * THE SOFTWARE.
  */
 
+ var mainCanvas = document.createElement('canvas');
+ var mainContext = mainCanvas.getContext('2d');
+ var snapShot = null;
+
  function create () {
   var Fireworks = (function() {
 
     // declare variables
     var particles = [],
-    mainCanvas = null,
-    mainContext = null,
+    // mainCanvas = null,
+    // mainContext = null,
+    indivCanvas = null,
+    indivContext = null,
     fireworkCanvas = null,
     fireworkContext = null,
     viewportWidth = 0,
@@ -55,8 +61,8 @@
       onWindowResize();
 
       // create a canvas for the fireworks
-      mainCanvas = document.createElement('canvas');
-      mainContext = mainCanvas.getContext('2d');
+      indivCanvas = document.createElement('canvas');
+      indivContext = indivCanvas.getContext('2d');    
 
       // off screen canvas buffer
       fireworkCanvas = document.createElement('canvas');
@@ -70,18 +76,17 @@
 
       // add the canvas in
       document.body.appendChild(mainCanvas);
-      // document.addEventListener('mouseup', createFirework, true);
-      // document.addEventListener('touchend', createFirework, true);
+      document.addEventListener('mouseup', createFirework, true);
       setInterval(function(){createFirework();},2000);
 
       if (playerInfo.player === 1) {
-        mainCanvas.style.zIndex="4";
+        indivCanvas.style.zIndex="4";
       } else if (playerInfo.player === 2) {
-        mainCanvas.style.zIndex="3";
+        indivCanvas.style.zIndex="3";
       } else if (playerInfo.player === 3) {
-        mainCanvas.style.zIndex="2";
+        indivCanvas.style.zIndex="2";
       } else if (playerInfo.player === 4) {
-        mainCanvas.style.zIndex="1";
+        indivCanvas.style.zIndex="1";
       }
 
       // and now we set off
@@ -140,6 +145,9 @@
      * detected viewport size
      */
     function setMainCanvasDimensions() {
+      indivCanvas.width = viewportWidth;
+      indivCanvas.height = viewportHeight;
+
       mainCanvas.width = viewportWidth;
       mainCanvas.height = viewportHeight;
     }
@@ -148,6 +156,7 @@
      * The main loop where everything happens
      */
     function update() {
+      // mainContext.putImageData(snapShot,0,0);
       clearContext();
       requestAnimFrame(update);
       drawFireworks();
@@ -183,17 +192,17 @@
           // then we know we can safely(!) explode it... yeah.
           if(!firework.usePhysics) {
 
-            // if(Math.random() < 0.8) {
-            //   FireworkExplosions.star(firework);
-            // } else {
-              FireworkExplosions.circle(firework, playerInfo, Fireworks);
-            // }
+          FireworkExplosions.circle(firework, playerInfo, Fireworks);
+
           }
         }
 
         // pass the canvas context and the firework
         // colours to the
-        firework.render(mainContext, fireworkCanvas);
+        firework.render(indivContext, fireworkCanvas);
+
+        snapShot = indivContext.getImageData(0,0,indivCanvas.width,indivCanvas.height);
+        console.log(snapShot);
       }
     }
 
@@ -210,15 +219,10 @@
         new Particle(
           // position
           {
-            // x: pos.x || viewportWidth * 0.5,
             x: pos.x || Math.floor(Math.random()*(viewportWidth-100)) + 100,
             y: pos.y || viewportHeight + 10
           },
 
-          // target
-          // {
-          //   y: target.y || 150 + Math.random() * 100
-          // },
           {
             y: target
           },        
@@ -229,7 +233,6 @@
             y: vel.y || 0
           },
 
-          // color || Math.floor(Math.random() * 100) * 12,
           color,
 
           usePhysics)
@@ -399,8 +402,6 @@ var FireworkExplosions = {
         firework.pos,
         null,
         {
-          // x: Math.cos(particleAngle) * randomVelocity,
-          // y: Math.sin(particleAngle) * randomVelocity
           x: Math.cos(particleAngle) * playerVelocity,
           y: Math.sin(particleAngle) * playerVelocity
         },
@@ -417,21 +418,16 @@ window.onload = function() {
    a = create();
    a.update(1, 5, 2);
    a.initialize();
-   // a.getElementById("canvas").style.position="relative";
-   // a.getElementById("canvas").style.zIndex="4";
 
    b = create();
-   // b.mainCanvas.style.zindex="3";
    b.update(2, 5, 4);
    b.initialize();
 
    c = create();
-   // c.mainCanvas.style.zindex="2";
    c.update(3, 5, 6);
    c.initialize();
 
    d = create();
-   // d.mainCanvas.style.zindex="1";
    d.update(4, 5, 8);
    d.initialize();
 };

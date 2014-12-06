@@ -148,8 +148,8 @@
      * The main loop where everything happens
      */
     function update() {
-      clearContext();
-
+      // clearContext();
+      mainContext.clearRect(0, 0, viewportWidth, viewportHeight);
       requestAnimFrame(update);
       drawFireworks();
     }
