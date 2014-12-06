@@ -68,7 +68,6 @@
     <Compile Include="Kinect\KinectInput.cs" />
     <Compile Include="Kinect\AutomatedInput.cs" />
     <Compile Include="Kinect\IPlayerInput.cs" />
-    <Compile Include="Kinect\KinectInput.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -79,14 +78,6 @@
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\MusicPlayer.cs" />
     <Compile Include="Model\Song.cs" />
-    <Compile Include="obj\Debug\App.g.i.cs" />
-    <Compile Include="obj\Debug\MainWindow.g.i.cs" />
-    <Compile Include="obj\Debug\MHCI.Hackathon.App_Content.g.i.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
-    <Compile Include="Model\Action.cs" />
-    <Compile Include="Model\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -123,7 +114,6 @@
     <Content Include="lib\ikpFlac.dll" />
     <Content Include="lib\ikpMP3.dll" />
     <Content Include="lib\irrKlang.NET4.dll" />
-    <Resource Include="obj\Debug\MHCI.Hackathon.App.csproj.FileListAbsolute.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="obj\Debug\TempPE\" />

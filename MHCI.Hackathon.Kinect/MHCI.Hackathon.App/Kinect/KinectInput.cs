@@ -76,7 +76,8 @@ namespace MHCI.Hackathon.App.Kinect
             if (!body.IsTracked)
                 return;
 
-            RemovePlayerIfOutOfBounds(body);
+            if (RemovePlayerIfOutOfBounds(body))
+                return;
             
             var spine = body.Joints.Single(j => j.Key == JointType.SpineMid).Value;
 
@@ -126,9 +127,9 @@ namespace MHCI.Hackathon.App.Kinect
         private bool RemovePlayerIfOutOfBounds(Body body)
         {
             int playerId = (int)body.TrackingId;
-            var xPosition = body.Joints.Single(j => j.Key == JointType.SpineMid).Value.Position.X;
+            var xPosition = body.Joints.Single(j => j.Key == JointType.SpineMid).Value.Position;
 
-            if (xPosition > -1 && xPosition < 1)
+            if (IsPlaying(xPosition))
                 return false;
 
             if (this._playerMap.ContainsKey(playerId))
