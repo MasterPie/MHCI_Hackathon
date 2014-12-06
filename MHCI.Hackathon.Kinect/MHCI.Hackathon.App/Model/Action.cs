@@ -8,8 +8,8 @@ namespace MHCI.Hackathon.App.Model
 {
     public class Action
     {
-        Player Player { get; set; }
-        double Volume { get; set; } // 0 - 10 ft (not sure about units)
-        double Craziness { get; set; } // 0 - 10
+        public Player Player { get; set; }
+        public double Volume { get; set; } // 0 - 10 ft (not sure about units)
+        public double Craziness { get; set; } // 0 - 10
     }
 }

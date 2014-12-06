@@ -8,6 +8,6 @@ namespace MHCI.Hackathon.App.Model
 {
     public class Player
     {
-        int Id { get; set; }
+        public int Id { get; set; }
     }
 }
