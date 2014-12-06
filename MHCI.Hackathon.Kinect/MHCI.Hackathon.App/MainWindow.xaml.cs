@@ -35,8 +35,8 @@ namespace MHCI.Hackathon.App
             _playerInputEngine.PlayerActionsChanged += _playerInputEngine_PlayerActionsChanged;
             _playerInputEngine.PlayerJoined += _playerInputEngine_PlayerJoined;
             _playerInputEngine.PlayerLeft += _playerInputEngine_PlayerLeft;
-
-            String relativePath = "Surface_Announcement_music.mp3";
+            
+            String relativePath = "ChristmasSong.mp3";
             var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string absolutePath = appDirectory + relativePath;
             Model.Song song = new Model.Song("Song", absolutePath);

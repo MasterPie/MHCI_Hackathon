@@ -38,7 +38,7 @@ namespace MHCI.Hackathon.App.Model
                     throw new ArgumentException("Unable to play song");
                 }
 
-                //this._playUpdater.Start();
+                this._playUpdater.Start();
 
                 return this._currentlyPlayingSound.PlayLength;
             }
