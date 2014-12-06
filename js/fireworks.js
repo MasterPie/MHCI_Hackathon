@@ -25,29 +25,26 @@
 
     // declare variables
     var particles = [],
-        mainCanvas = null,
-        mainContext = null,
-        fireworkCanvas = null,
-        fireworkContext = null,
-        viewportWidth = 0,
-        viewportHeight = 0,
-        playerTarget = null
-        playerColor = null;
+    mainCanvas = null,
+    mainContext = null,
+    fireworkCanvas = null,
+    fireworkContext = null,
+    viewportWidth = 0,
+    viewportHeight = 0,
+    playerTarget = null
+    playerColor = null;
 
-        var playerInfo = {
-            player: null,
-            craziness: null,
-            volume: null
-        };
+    var playerInfo = {
+      player: null,
+      craziness: null,
+      volume: null
+    };
 
-        var updateValues = function (player, craziness, volume) {
-            playerInfo.player = player;
-            playerInfo.craziness = craziness;
-            playerInfo.volume = volume;
-        };
-
-        updateValues(1, 1, 5);
-
+    var updateValues = function (player, craziness, volume) {
+      playerInfo.player = player;
+      playerInfo.craziness = craziness;
+      playerInfo.volume = volume;
+    };
 
     /**
      * Create DOM elements
@@ -60,7 +57,7 @@
       // create a canvas for the fireworks
       mainCanvas = document.createElement('canvas');
       mainContext = mainCanvas.getContext('2d');
-    
+
       // off screen canvas buffer
       fireworkCanvas = document.createElement('canvas');
       fireworkContext = fireworkCanvas.getContext('2d');
@@ -73,9 +70,19 @@
 
       // add the canvas in
       document.body.appendChild(mainCanvas);
-      document.addEventListener('mouseup', createFirework, true);
+      // document.addEventListener('mouseup', createFirework, true);
       // document.addEventListener('touchend', createFirework, true);
       setInterval(function(){createFirework();},2000);
+
+      // if (playerInfo.player === 1) {
+      //   mainCanvas.style.zIndex="1";
+      // } else if (playerInfo.player === 2) {
+      //   mainCanvas.style.zIndex="1";
+      // } else if (playerInfo.player === 3) {
+      //   mainCanvas.style.zIndex="1";
+      // } else if (playerInfo.player === 4) {
+      //   mainCanvas.style.zIndex="1";
+      // }
 
       // and now we set off
       update();
@@ -96,8 +103,6 @@
       }
 
       playerTarget = (Math.random() * mainCanvas.height / 10) + ((10 - playerInfo.volume) * mainCanvas.height / 10);
-
-      playerVelocity = 0;
 
       createParticle(null,playerTarget,null,playerColor,null);
     }
@@ -182,7 +187,7 @@
             // if(Math.random() < 0.8) {
             //   FireworkExplosions.star(firework);
             // } else {
-              FireworkExplosions.circle(firework);
+              FireworkExplosions.circle(firework, playerInfo, Fireworks);
             // }
           }
         }
@@ -207,7 +212,7 @@
           // position
           {
             // x: pos.x || viewportWidth * 0.5,
-            x: pos.x || Math.floor(Math.random()*(viewportWidth-50)) + 50,
+            x: pos.x || Math.floor(Math.random()*(viewportWidth-100)) + 100,
             y: pos.y || viewportHeight + 10
           },
 
@@ -380,7 +385,7 @@ var FireworkExplosions = {
   /**
    * Explodes in a roughly circular fashion
    */
-  circle: function(firework) {
+  circle: function(firework, playerInfo, Fireworks) {
 
     var count = 100;
     var angle = (Math.PI * 2) / count;
@@ -389,7 +394,7 @@ var FireworkExplosions = {
       var randomVelocity = 4 + Math.random() * 4;
       var particleAngle = count * angle;
 
-      var playerVelocity = 1 + object.craziness*(7/10);
+      var playerVelocity = 1 + playerInfo.craziness*(7/10);
 
       Fireworks.createParticle(
         firework.pos,
@@ -411,34 +416,36 @@ var a, b, c, d;
 // Go
 window.onload = function() {
    a = create();
+   a.update(1, 5, 2);
    a.initialize();
+   // a.getElementById("canvas").style.position="relative";
+   // a.getElementById("canvas").style.zIndex="4";
 
    b = create();
-   b.update(2, 1, 5);
+   // b.mainCanvas.style.zindex="3";
+   b.update(2, 5, 4);
    b.initialize();
 
    c = create();
-   c.update(3, 1, 5);
+   // c.mainCanvas.style.zindex="2";
+   c.update(3, 5, 6);
    c.initialize();
 
    d = create();
-   d.update(4, 1, 5);
+   // d.mainCanvas.style.zindex="1";
+   d.update(4, 5, 8);
    d.initialize();
-//  Fireworks.initialize();
-  // Fireworks.initialize();
-  // Fireworks.initialize();
-  // Fireworks.initialize();
 };
 
 function acceptAction(playerNum, craziness, volume) {
     if (playerNum == 1)
         a.update(1, craziness, volume);
     else if (playerNum == 2)
-        a.update(2, craziness, volume);
+        b.update(2, craziness, volume);
     else if (playerNum == 3)
-        a.update(3, craziness, volume);
+        c.update(3, craziness, volume);
     else if (playerNum == 4)
-        a.update(4, craziness, volume);
+        d.update(4, craziness, volume);
 }
 
 
