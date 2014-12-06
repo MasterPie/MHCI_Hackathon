@@ -46,6 +46,11 @@
       playerInfo.volume = volume;
     };
 
+    var clearValues = function () {
+      playerInfo.craziness = 0;
+      playerInfo.volume = 0;
+    };
+
     /**
      * Create DOM elements
      */
@@ -71,7 +76,7 @@
       // add the canvas in
       document.body.appendChild(mainCanvas);
       document.addEventListener('mouseup', createFirework, true);
-      setInterval(function(){createFirework();},2000);
+      var explode = setInterval(function(){createFirework();},2000);
 
       if (playerInfo.player === 1) {
         mainCanvas.style.zIndex="4";
@@ -239,7 +244,8 @@
     return {
       initialize: initialize,
       createParticle: createParticle,
-        update: updateValues
+      updateValues: updateValues,
+      clearValues: clearValues
     };
 
   })();
@@ -403,43 +409,45 @@ var a, b, c, d;
 // Go
 window.onload = function() {
    a = create();
-   a.update(1, 0, 0);
+   a.updateValues(1, 5, 5);
    a.initialize();
 
    b = create();
-   b.update(2, 0, 0);
+   b.updateValues(2, 0, 0);
    b.initialize();
 
    c = create();
-   c.update(3, 0, 0);
+   c.updateValues(3, 0, 0);
    c.initialize();
 
    d = create();
-   d.update(4, 0, 0);
+   d.updateValues(4, 0, 0);
    d.initialize();
 };
 
 function acceptAction(playerNum, craziness, volume) {
     if (playerNum == 1)
-        a.update(1, craziness, volume);
+        a.updateValues(1, craziness, volume);
     else if (playerNum == 2)
-        b.update(2, craziness, volume);
+        b.updateValues(2, craziness, volume);
     else if (playerNum == 3)
-        c.update(3, craziness, volume);
+        c.updateValues(3, craziness, volume);
     else if (playerNum == 4)
-        d.update(4, craziness, volume);
+        d.updateValues(4, craziness, volume);
 }
 
 function playerLeft(playerNum) {
     //alert("Player left!!! " + playerNum);
     if (playerNum == 1)
-        a.update(1, 0, 0);
+        a.clearValues();
     else if (playerNum == 2)
-        b.update(2, 0, 0);
+        b.clearValues();
     else if (playerNum == 3)
-        c.update(3, 0, 0);
+        c.clearValues();
     else if (playerNum == 4)
-        d.update(4, 0, 0);
+        d.clearValues();
 }
 
-
+// acceptAction(1,10,10);
+// setTimeout(function(){acceptAction(2,10,10);},5000);
+// setTimeout(function(){playerLeft(1);},10000);

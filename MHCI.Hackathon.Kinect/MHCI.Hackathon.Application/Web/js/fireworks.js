@@ -443,4 +443,13 @@ function acceptAction(playerNum, craziness, volume) {
         d.update(4, craziness, volume);
 }
 
-
+function playerLeft(playerNum) {
+    if (playerNum == 1)
+        a.update(1, 0, 0);
+    else if (playerNum == 2)
+        b.update(2, 0, 0);
+    else if (playerNum == 3)
+        c.update(3, 0, 0);
+    else if (playerNum == 4)
+        d.update(4, 0, 0);
+}
