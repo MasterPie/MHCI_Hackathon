@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms.Integration;
+using MHCI.Hackathon.App.Kinect;
 
 namespace MHCI.Hackathon.App
 {
@@ -22,11 +23,42 @@ namespace MHCI.Hackathon.App
     public partial class MainWindow : Window
     {
         private WebKit.WebKitBrowser _browser;
+        private IPlayerInput _playerInputEngine;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            //_playerInputEngine = new KinectInput();
+            _playerInputEngine = new AutomatedInput();
+            _playerInputEngine.PlayerActionsChanged += _playerInputEngine_PlayerActionsChanged;
+            _playerInputEngine.PlayerJoined += _playerInputEngine_PlayerJoined;
+            _playerInputEngine.PlayerLeft += _playerInputEngine_PlayerLeft;
         }
+
+        void _playerInputEngine_PlayerLeft(object sender, int e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        void _playerInputEngine_PlayerJoined(object sender, int e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        void _playerInputEngine_PlayerActionsChanged(object sender, IEnumerable<Model.Action> e)
+        {
+            foreach (var action in e)
+            {
+                Model.Song song = new Model.Song("Song", "../../../../../../../Desktop/bells_gm");
+                Model.MusicPlayer player = new Model.MusicPlayer();
+
+                player.Play(song);
+
+                //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
+            }
+        }
+
 
         #region WebKitBrowser Routines
         /// <summary>
@@ -53,6 +85,7 @@ namespace MHCI.Hackathon.App
         /// <param name="e"></param>
         private void browserContainer_Loaded(object sender, RoutedEventArgs e)
         {
+            return;
             WindowsFormsHost host = new WindowsFormsHost();
 
             _browser = new WebKit.WebKitBrowser();
