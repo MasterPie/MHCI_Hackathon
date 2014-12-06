@@ -40,7 +40,7 @@ namespace MHCI.Hackathon.App
 
             string curDir = Directory.GetCurrentDirectory();
 
-            browser.Navigate(String.Format("file:///{0}/Web/index.html", curDir));
+            browser.Navigate("http://localhost:3001");
 
             String relativePath = "ChristmasSong.mp3";
             var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
