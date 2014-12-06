@@ -37,13 +37,22 @@
     var playerInfo = {
       player: null,
       craziness: null,
-      volume: null
+      volume: null,
+      active: false
     };
 
-    var updateValues = function (player, craziness, volume) {
+    var updateValues = function (player, craziness, volume, active) {
       playerInfo.player = player;
       playerInfo.craziness = craziness;
       playerInfo.volume = volume;
+
+      playerInfo.active = active;
+
+      if(playerInfo.active == true) {
+        var explode = setInterval(function(){createFirework();},2000);
+      } else {
+        clearInterval(explode);
+      }
     };
 
     var clearValues = function () {
@@ -76,7 +85,7 @@
       // add the canvas in
       document.body.appendChild(mainCanvas);
       document.addEventListener('mouseup', createFirework, true);
-      var explode = setInterval(function(){createFirework();},2000);
+      // var explode = setInterval(function(){createFirework();},2000);
 
       if (playerInfo.player === 1) {
         mainCanvas.style.zIndex="4";
@@ -426,21 +435,19 @@ window.onload = function() {
 };
 
 function acceptAction(playerNum, craziness, volume) {
-    if (playerNum == 1)
-        a.updateValues(1, craziness, volume);
-    else if (playerNum == 2)
-        b.updateValues(2, craziness, volume);
-    else if (playerNum == 3)
-        c.updateValues(3, craziness, volume);
-    else if (playerNum == 4)
-        d.updateValues(4, craziness, volume);
+    if (playerNum == 1) 
+        a.updateValues(1, craziness, volume, true);
+    else if (playerNum == 2) 
+        b.updateValues(2, craziness, volume, true);
+    else if (playerNum == 3) 
+        c.updateValues(3, craziness, volume, true);
+    else if (playerNum == 4) 
+        d.updateValues(4, craziness, volume, true);
 }
 
 function playerLeft(playerNum) {
-    if (playerNum == 1) {
-        //alert("CLEAR VALUES! " + playerNum);
-        a.clearValues();
-    }
+    if (playerNum == 1)
+        a.updateValues(1, 0, 0, false)
     else if (playerNum == 2)
         b.clearValues();
     else if (playerNum == 3)
@@ -450,5 +457,6 @@ function playerLeft(playerNum) {
 }
 
 // acceptAction(1,10,10);
+// setTimeout(function(){acceptAction(1, 5, 5);},3000);
 // setTimeout(function(){acceptAction(2,10,10);},5000);
 // setTimeout(function(){playerLeft(1);},10000);

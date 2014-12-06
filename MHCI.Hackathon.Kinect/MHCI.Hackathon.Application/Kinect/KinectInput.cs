@@ -174,7 +174,7 @@ namespace MHCI.Hackathon.App.Kinect
         {
             var spineZPosition = bodyPosition.Z * 3.28084; //convert to feet
             Console.WriteLine("VOLUME {0}", (int)spineZPosition);
-            return (int)spineZPosition - 5;
+            return Math.Abs(((int)spineZPosition - 5) - 10);
         }
 
         private double TransformToAppBeats(int id, CameraSpacePoint bodyPosition)

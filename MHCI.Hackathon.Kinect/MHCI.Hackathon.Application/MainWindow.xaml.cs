@@ -163,7 +163,7 @@ namespace MHCI.Hackathon.App
                         break;    
                 }
 
-                MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
+                //MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
                 //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
             }
         }
