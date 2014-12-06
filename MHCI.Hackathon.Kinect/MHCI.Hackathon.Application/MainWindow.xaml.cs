@@ -68,39 +68,46 @@ namespace MHCI.Hackathon.App
                 throw new ArgumentException("Unable to play song");
             }
 
-            //_sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
-            //_sound_layer2.Volume = 0;
-            string curDir = Directory.GetCurrentDirectory();
+            _sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
+            _sound_layer2.Volume = 0;
 
             browser.Navigate("http://localhost:3001");
+            browser.Navigated += browser_Navigated;
 
-            //_sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
-            //_sound_layer3.Volume = 0;
+            _sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
+            _sound_layer3.Volume = 0;
 
-            //_sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
-            //_sound_layer4.Volume = 0;
+            _sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
+            _sound_layer4.Volume = 0;
         }
 
-
+        bool canMakeCalls = false;
+        void browser_Navigated(object sender, NavigationEventArgs e)
+        {
+            canMakeCalls = true;
+        }
+       
         #region Kinect Events
         void _playerInputEngine_PlayerLeft(object sender, int e)
         {
-            //throw new NotImplementedException();
+            Console.WriteLine("Player left: " + e);
+            MakeJSCall("playerLeft", e);
         }
 
         void _playerInputEngine_PlayerJoined(object sender, int e)
         {
             if (!isPlaying)
             {
-                _sound_layer1 = this._engine.Play2D(_song_layer1.FileLocation, false);
+//                _sound_layer1 = this._engine.Play2D(_song_layer1.FileLocation, false);
+                _sound_layer1.Volume = 1F;
 
-                _sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
+  //              _sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
                 _sound_layer2.Volume = 0;
 
-                _sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
+    //            _sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
                 _sound_layer3.Volume = 0;
 
-                _sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
+      //          _sound_layer4 = this._engine.Play2D(_song_layer4.FileLocation, false);
                 _sound_layer4.Volume = 0;
             }
             //throw new NotImplementedException();
@@ -124,6 +131,9 @@ namespace MHCI.Hackathon.App
         /// <param name="js">string containing javascript code</param>
         public void MakeJSCall(string js, params object[] args)
         {
+            if (!canMakeCalls)
+                return;
+
             try
             {
                 browser.InvokeScript(js, args);
@@ -131,7 +141,7 @@ namespace MHCI.Hackathon.App
             }
             catch (System.Exception h)
             {
-                InitializeComponent(); // Restart UI
+                //InitializeComponent(); // Restart UI
             }
         }
         #endregion

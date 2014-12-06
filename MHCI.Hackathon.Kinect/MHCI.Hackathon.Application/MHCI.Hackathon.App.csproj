@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\CefSharp.Wpf.33.0.2\build\CefSharp.Wpf.props" Condition="Exists('packages\CefSharp.Wpf.33.0.2\build\CefSharp.Wpf.props')" />
-  <Import Project="packages\CefSharp.Common.33.0.2\build\CefSharp.Common.props" Condition="Exists('packages\CefSharp.Common.33.0.2\build\CefSharp.Common.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -149,7 +147,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="MHCI.Hackathon.App_TemporaryKey.pfx" />
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -190,17 +187,6 @@
 xcopy "$(SolutionDir)lib\*.*" "$(SolutionDir)$(OutDir)" /Y /D
 xcopy "$(SolutionDir)Web\*.*" "$(SolutionDir)$(OutDir)Web\" /Y /D /S</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="packages\cef.redist.3.1750.1738\build\cef.redist.targets" Condition="Exists('packages\cef.redist.3.1750.1738\build\cef.redist.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\cef.redist.3.1750.1738\build\cef.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cef.redist.3.1750.1738\build\cef.redist.targets'))" />
-    <Error Condition="!Exists('packages\CefSharp.Common.33.0.2\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CefSharp.Common.33.0.2\build\CefSharp.Common.props'))" />
-    <Error Condition="!Exists('packages\CefSharp.Common.33.0.2\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CefSharp.Common.33.0.2\build\CefSharp.Common.targets'))" />
-    <Error Condition="!Exists('packages\CefSharp.Wpf.33.0.2\build\CefSharp.Wpf.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CefSharp.Wpf.33.0.2\build\CefSharp.Wpf.props'))" />
-  </Target>
-  <Import Project="packages\CefSharp.Common.33.0.2\build\CefSharp.Common.targets" Condition="Exists('packages\CefSharp.Common.33.0.2\build\CefSharp.Common.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
