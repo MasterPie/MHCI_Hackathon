@@ -20,22 +20,7 @@
  * THE SOFTWARE.
  */
 
-var object = {
-  player: null,
-  craziness: null,
-  volume: null
-}
-
-var updateValues = function(player, craziness, volume) {
-  object.player = player;
-  object.craziness = craziness;
-  object.volume = volume;
-}
-
-updateValues(1, 1, 5);
-
-// function create () {
-
+ function create () {
   var Fireworks = (function() {
 
     // declare variables
@@ -49,6 +34,21 @@ updateValues(1, 1, 5);
         playerTarget = null
         playerColor = null;
 
+        var playerInfo = {
+            player: null,
+            craziness: null,
+            volume: null
+        };
+
+        var updateValues = function (player, craziness, volume) {
+            playerInfo.player = player;
+            playerInfo.craziness = craziness;
+            playerInfo.volume = volume;
+        };
+
+        updateValues(1, 1, 5);
+
+
     /**
      * Create DOM elements
      */
@@ -60,7 +60,7 @@ updateValues(1, 1, 5);
       // create a canvas for the fireworks
       mainCanvas = document.createElement('canvas');
       mainContext = mainCanvas.getContext('2d');
-
+    
       // off screen canvas buffer
       fireworkCanvas = document.createElement('canvas');
       fireworkContext = fireworkCanvas.getContext('2d');
@@ -85,17 +85,17 @@ updateValues(1, 1, 5);
      * Pass through function to create a new firework
      */
     function createFirework() {
-      if (object.player === 1) {
+        if (playerInfo.player === 1) {
         playerColor = 192; //yellow
-      } else if (object.player === 2) {
+        } else if (playerInfo.player === 2) {
         playerColor = 396; //green
-      } else if (object.player === 3) {
+        } else if (playerInfo.player === 3) {
         playerColor = 756; //blue
-      } else if (object.player === 4) {
+        } else if (playerInfo.player === 4) {
         playerColor = 0; //red
       }
 
-      playerTarget = (Math.random()*mainCanvas.height/10) + ((10-object.volume)*mainCanvas.height/10);
+      playerTarget = (Math.random() * mainCanvas.height / 10) + ((10 - playerInfo.volume) * mainCanvas.height / 10);
 
       playerVelocity = 0;
 
@@ -244,13 +244,14 @@ updateValues(1, 1, 5);
     // declare an API
     return {
       initialize: initialize,
-      createParticle: createParticle
+      createParticle: createParticle,
+        update: updateValues
     };
 
   })();
 
-//   return Fireworks;
-// }
+   return Fireworks;
+ }
 
 /**
  * Represents a single point, so the firework being fired up
@@ -405,16 +406,39 @@ var FireworkExplosions = {
   }
 };
 
+var a, b, c, d;
+
 // Go
 window.onload = function() {
-  // var a = create();
-  // a.initialize();
+   a = create();
+   a.initialize();
 
-  // var b = create();
-  // b.initialize();
+   b = create();
+   b.update(2, 1, 5);
+   b.initialize();
 
-  Fireworks.initialize();
+   c = create();
+   c.update(3, 1, 5);
+   c.initialize();
+
+   d = create();
+   d.update(4, 1, 5);
+   d.initialize();
+//  Fireworks.initialize();
   // Fireworks.initialize();
   // Fireworks.initialize();
   // Fireworks.initialize();
 };
+
+function acceptAction(playerNum, craziness, volume) {
+    if (playerNum == 1)
+        a.update(1, craziness, volume);
+    else if (playerNum == 2)
+        a.update(2, craziness, volume);
+    else if (playerNum == 3)
+        a.update(3, craziness, volume);
+    else if (playerNum == 4)
+        a.update(4, craziness, volume);
+}
+
+
