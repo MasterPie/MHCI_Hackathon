@@ -17,10 +17,14 @@ namespace MHCI.Hackathon.App.Kinect
         Dictionary<int, Model.Action> _gameState;
         Dictionary<int, CameraSpacePoint> _pastPosition;
 
+        Dictionary<int, int> _playerMap;
+
         public KinectInput()
         {
             _sensor = KinectSensor.GetDefault();
             _gameState = new Dictionary<int, Model.Action>();
+            _pastPosition = new Dictionary<int, CameraSpacePoint>();
+            _playerMap = new Dictionary<int, int>();
 
             if (_sensor != null)
             {
@@ -72,11 +76,15 @@ namespace MHCI.Hackathon.App.Kinect
             if (!body.IsTracked)
                 return;
 
+            RemovePlayerIfOutOfBounds(body);
+            
             var spine = body.Joints.Single(j => j.Key == JointType.SpineMid).Value;
-            int playerId = (int)body.TrackingId;
 
             if (!IsPlaying(spine.Position))
                 return;
+
+            //Check if new
+            int playerId = AddPlayerIfNewOrGetExistingId(body);
 
             var volumeNumber = TransformToAppVolume(spine.Position);
             var beatNumber = TransformToAppBeats(playerId,spine.Position);
@@ -90,27 +98,62 @@ namespace MHCI.Hackathon.App.Kinect
 
 
             if (!this._gameState.ContainsKey(playerId))
-            {
                 this._gameState.Add(playerId, action);
-            }
+            else
+                this._gameState[playerId] = action;
+        }
+
+        private int AddPlayerIfNewOrGetExistingId(Body body)
+        {
+            int playerId = (int)body.TrackingId;
+
+            if (this._playerMap.ContainsKey(playerId))
+                return this._playerMap[playerId];
             else
             {
-                this._gameState[playerId] = action;
+                var appPlayerids = this._playerMap.Values;
+                int idToCreate = appPlayerids.Contains(1) ? appPlayerids.Contains(2) ? appPlayerids.Contains(3) ? 4 : 3 : 2 : 1;
+
+                if (!this._playerMap.ContainsKey(playerId))
+                    this._playerMap[playerId] = -1;
+
+                this._playerMap[playerId] = idToCreate;
+                Console.WriteLine("[{0}] Added new player {1} at {2}",playerId, idToCreate, DateTime.Now.ToShortTimeString());
+                return idToCreate;
             }
         }
 
+        private bool RemovePlayerIfOutOfBounds(Body body)
+        {
+            int playerId = (int)body.TrackingId;
+            var xPosition = body.Joints.Single(j => j.Key == JointType.SpineMid).Value.Position.X;
+
+            if (xPosition > -1 && xPosition < 1)
+                return false;
+
+            if (this._playerMap.ContainsKey(playerId))
+            {
+                int id = this._playerMap[playerId];
+                this._playerMap.Remove(playerId);
+                Console.WriteLine("[{0}] Removed player {1} at time {2}", playerId, id, DateTime.Now.ToShortTimeString());
+                return true;
+            }
+            return false;
+        }
 
         private bool IsPlaying(CameraSpacePoint bodyPosition)
         {
             var spineZPosition = bodyPosition.Z;
-
-            return spineZPosition > 1.55 && spineZPosition < 4.5;
+            var xPosition = bodyPosition.X;
+            var yPosition = bodyPosition.Y;
+            //Console.WriteLine(xPosition);
+            return spineZPosition > 1.55 && spineZPosition < 4.5 && xPosition > -1 && xPosition < 1;
         }
 
         private double TransformToAppVolume(CameraSpacePoint bodyPosition)
         {
-            var spineZPosition = bodyPosition.Z;
-
+            var spineZPosition = bodyPosition.Z * 3.28084; //convert to feet
+            
             return (int)spineZPosition;
         }
 
@@ -127,8 +170,13 @@ namespace MHCI.Hackathon.App.Kinect
                 var zDist = Math.Abs(pastPosition.Z - bodyPosition.Z);
 
                 var totalDist = xDist + yDist + zDist;
+                totalDist = totalDist * 3.28084F;
+                //min 1.3
+                //max 2
                 // y = 1 + (x-A)*(10-1)/(B-A)
-                var scaledDist = 1 + (totalDist - 0) * (10 - 1) / (10 - 1);
+                //Console.WriteLine(totalDist * 100);
+                var scaledDist = totalDist * 100;
+                this._pastPosition[id] = bodyPosition;
                 return scaledDist;
             }
             else

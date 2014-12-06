@@ -27,17 +27,20 @@ namespace MHCI.Hackathon.App
 
         void _playerInputEngine_PlayerLeft(object sender, int e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         void _playerInputEngine_PlayerJoined(object sender, int e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         void _playerInputEngine_PlayerActionsChanged(object sender, IEnumerable<Model.Action> e)
         {
-            throw new NotImplementedException();
+            foreach (var action in e)
+            {
+                //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
+            }
         }
     }
 }
