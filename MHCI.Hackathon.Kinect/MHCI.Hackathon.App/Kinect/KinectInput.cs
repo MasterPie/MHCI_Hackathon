@@ -32,7 +32,28 @@ namespace MHCI.Hackathon.App.Kinect
 
         void _reader_MultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
         {
-            throw new NotImplementedException();
+            var reference = e.FrameReference.AcquireFrame();
+
+            using (var frame = reference.BodyFrameReference.AcquireFrame())
+            {
+                if (frame != null)
+                {
+                    _bodies = new Body[frame.BodyFrameSource.BodyCount];
+
+                    frame.GetAndRefreshBodyData(_bodies);
+
+                    foreach (var body in _bodies)
+                    {
+                        if (body != null)
+                        {
+                            body
+                            // Do something with the body...
+                        }
+                    }
+                }
+            }
         }
+
+        
     }
 }
