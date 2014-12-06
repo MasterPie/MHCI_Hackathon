@@ -137,7 +137,7 @@ namespace MHCI.Hackathon.App.Kinect
                     this._playerMap[playerId] = -1;
 
                 this._playerMap[playerId] = idToCreate;
-                //Console.WriteLine("[{0}] Added new player {1} at {2}",playerId, idToCreate, DateTime.Now.ToShortTimeString());
+                Console.WriteLine("[{0}] Added new player {1} at {2}",playerId, idToCreate, DateTime.Now.ToShortTimeString());
 
                 if (PlayerJoined != null)
                 {
@@ -162,7 +162,7 @@ namespace MHCI.Hackathon.App.Kinect
                 this._playerMap.Remove(playerId);
                 this._gameState.Remove(id);
                 this._pastPosition.Remove(id);
-                //Console.WriteLine("[{0}] Removed player {1} at time {2}", playerId, id, DateTime.Now.ToShortTimeString());
+                Console.WriteLine("[{0}] Removed player {1} at time {2}", playerId, id, DateTime.Now.ToShortTimeString());
 
                 if (PlayerLeft != null)
                 {

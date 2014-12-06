@@ -164,8 +164,10 @@ namespace MHCI.Hackathon.App
                         break;    
                 }
 
+                
+
                 MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
-                //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
+                Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
             }
         }
         #endregion
@@ -186,16 +188,16 @@ namespace MHCI.Hackathon.App
                     newPlaybackRate = 0.5f;
                     break;
                 case 3:
-                    newPlaybackRate = 0.7f;
+                    newPlaybackRate = 0.5f;
                     break;
                 case 4:
-                    newPlaybackRate = 0.7f;
+                    newPlaybackRate = 0.5f;
                     break;
                 case 5:
-                    newPlaybackRate = 1.0f;
+                    newPlaybackRate = 0.5f;
                     break;
                 case 6:
-                    newPlaybackRate = 1.0f;
+                    newPlaybackRate = 0.5f;
                     break;
                 case 7:
                     newPlaybackRate = 1.0f;
