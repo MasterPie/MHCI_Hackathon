@@ -1,1 +1,16 @@
-C:\Users\Admin\Source\Repos\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\bin\Debug\MHCI.Hackathon.App.exe.config
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MainWindow.baml
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MainWindow.g.cs
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\App.g.cs
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MHCI.Hackathon.App_Content.g.cs
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MHCI.Hackathon.App_MarkupCompile.cache
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MHCI.Hackathon.App.g.resources
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\bin\Debug\MHCI.Hackathon.App.exe.config
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\bin\Debug\MHCI.Hackathon.App.exe
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\bin\Debug\MHCI.Hackathon.App.pdb
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\bin\Debug\irrKlang.NET4.dll
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\bin\Debug\Microsoft.Kinect.dll
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\bin\Debug\Microsoft.Kinect.xml
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MHCI.Hackathon.App.Properties.Resources.resources
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MHCI.Hackathon.App.csproj.GenerateResource.Cache
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MHCI.Hackathon.App.exe
+C:\docs\dev\MHCI_Hackathon\MHCI.Hackathon.Kinect\MHCI.Hackathon.App\obj\Debug\MHCI.Hackathon.App.pdb
