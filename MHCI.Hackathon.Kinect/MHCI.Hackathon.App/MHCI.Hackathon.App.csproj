@@ -16,7 +16,7 @@
     <NuGetPackageImportStamp>cd7f4131</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -98,11 +98,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="bin\Debug\MHCI.Hackathon.App.exe.config" />
-    <None Include="bin\Debug\MHCI.Hackathon.App.vshost.exe.config" />
-    <None Include="bin\Debug\MHCI.Hackathon.App.vshost.exe.manifest" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\MHCI.Hackathon.App_MarkupCompile.i.cache" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -113,7 +108,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\MHCI.Hackathon.App.vshost.exe" />
     <Content Include="lib\ikpFlac.dll" />
     <Content Include="lib\ikpMP3.dll" />
     <Content Include="lib\irrKlang.NET4.dll" />
@@ -121,9 +115,7 @@
     <Content Include="lib\WebKit.Interop.dll" />
     <Content Include="lib\WebKitBrowser.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="obj\Debug\TempPE\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)music\*.*" "$(SolutionDir)$(OutDir)" /Y /D</PostBuildEvent>

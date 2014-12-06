@@ -24,16 +24,25 @@ namespace MHCI.Hackathon.App
     {
         
         private IPlayerInput _playerInputEngine;
+        private Model.MusicPlayer _musicPlayer;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            _playerInputEngine = new KinectInput();
-            //_playerInputEngine = new AutomatedInput();
+            //_playerInputEngine = new KinectInput();
+            _playerInputEngine = new AutomatedInput();
             _playerInputEngine.PlayerActionsChanged += _playerInputEngine_PlayerActionsChanged;
             _playerInputEngine.PlayerJoined += _playerInputEngine_PlayerJoined;
             _playerInputEngine.PlayerLeft += _playerInputEngine_PlayerLeft;
+
+            String relativePath = "Surface_Announcement_music.mp3";
+            var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string absolutePath = appDirectory + relativePath;
+            Model.Song song = new Model.Song("Song", absolutePath);
+            _musicPlayer = new Model.MusicPlayer();
+
+            _musicPlayer.Play(song, true);
         }
 
         #region Kinect Events
@@ -52,16 +61,10 @@ namespace MHCI.Hackathon.App
             foreach (var action in e)
             {
                 //String relativePath = "../../../../../../../Desktop/ChristmasSong";
-                String relativePath = "ChristmasSong";
-                var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                string absolutePath = appDirectory + relativePath;
-                Model.Song song = new Model.Song("Song", absolutePath);
-                Model.MusicPlayer musicPlayer = new Model.MusicPlayer();
-
-                musicPlayer.Play(song, true);
+                
 
 
-                MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
+                //MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
                 //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
             }
         }
