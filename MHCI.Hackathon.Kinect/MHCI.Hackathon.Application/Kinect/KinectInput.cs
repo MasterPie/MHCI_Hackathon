@@ -84,6 +84,12 @@ namespace MHCI.Hackathon.App.Kinect
             if (!IsPlaying(spine.Position))
                 return;
 
+            if (firstDetect)
+            {
+                firstDetect = false;
+                return;
+            }
+
             //Check if new
             int playerId = AddPlayerIfNewOrGetExistingId(body);
 
@@ -115,7 +121,7 @@ namespace MHCI.Hackathon.App.Kinect
         #endregion
 
         #region Add / Remove players
-
+        private bool firstDetect = true;
         private int AddPlayerIfNewOrGetExistingId(Body body)
         {
             int playerId = (int)body.TrackingId;
@@ -131,7 +137,7 @@ namespace MHCI.Hackathon.App.Kinect
                     this._playerMap[playerId] = -1;
 
                 this._playerMap[playerId] = idToCreate;
-                Console.WriteLine("[{0}] Added new player {1} at {2}",playerId, idToCreate, DateTime.Now.ToShortTimeString());
+                //Console.WriteLine("[{0}] Added new player {1} at {2}",playerId, idToCreate, DateTime.Now.ToShortTimeString());
 
                 if (PlayerJoined != null)
                 {
@@ -154,7 +160,9 @@ namespace MHCI.Hackathon.App.Kinect
             {
                 int id = this._playerMap[playerId];
                 this._playerMap.Remove(playerId);
-                Console.WriteLine("[{0}] Removed player {1} at time {2}", playerId, id, DateTime.Now.ToShortTimeString());
+                this._gameState.Remove(id);
+                this._pastPosition.Remove(id);
+                //Console.WriteLine("[{0}] Removed player {1} at time {2}", playerId, id, DateTime.Now.ToShortTimeString());
 
                 if (PlayerLeft != null)
                 {
@@ -174,7 +182,7 @@ namespace MHCI.Hackathon.App.Kinect
         {
             var spineZPosition = bodyPosition.Z * 3.28084; //convert to feet
             var volume = Math.Abs(((int)spineZPosition - 1) - 10);
-            Console.WriteLine("VOLUME {0}", volume);
+            //Console.WriteLine("VOLUME {0}", volume);
             return Math.Abs(volume);
         }
 
@@ -220,7 +228,7 @@ namespace MHCI.Hackathon.App.Kinect
                     ankleLeftPosition, 
                     ankleRightPosition
                 );
-                Console.WriteLine("VELOCITY {0}", scaledDist);
+                //Console.WriteLine("VELOCITY {0}", scaledDist);
                 return scaledDist;
             }
             else

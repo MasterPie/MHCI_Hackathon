@@ -20,7 +20,10 @@
  * THE SOFTWARE.
  */
 
- function create () {
+var shouldUpdate = false;
+
+function create() {
+    shouldUpdate = true;
   var Fireworks = (function() {
 
     // declare variables
@@ -426,22 +429,27 @@ var a, b, c, d;
 
 // Go
 window.onload = function() {
-   a = create();
-   a.updateValues(1, 0, 0);
-   a.initialize();
-
-   b = create();
-   b.updateValues(2, 0, 0);
-   b.initialize();
-
-   c = create();
-   c.updateValues(3, 0, 0);
-   c.initialize();
-
-   d = create();
-   d.updateValues(4, 0, 0);
-   d.initialize();
+        
+    reload();
 };
+
+function reload() {
+    a = create();
+    a.updateValues(1, 0, 0);
+    a.initialize();
+
+    b = create();
+    b.updateValues(2, 0, 0);
+    b.initialize();
+
+    c = create();
+    c.updateValues(3, 0, 0);
+    c.initialize();
+
+    d = create();
+    d.updateValues(4, 0, 0);
+    d.initialize();
+}
 
 function acceptAction(playerNum, craziness, volume) {
     if (playerNum == 1) 
@@ -463,6 +471,13 @@ function playerLeft(playerNum) {
         c.updateValues(3, 0, 0, false);
     else if (playerNum == 4)
         d.updateValues(4, 0, 0, false);
+    //var canvas = document.getElementsByTagName('canvas')[0];
+    //var context = canvas.getContext('2d');
+    //context.clearRect(0, 0, canvas.width, canvas.height);
+
+    shouldUpdate = false;
+
+    reload();
 }
 
 //acceptAction(1,10,10);

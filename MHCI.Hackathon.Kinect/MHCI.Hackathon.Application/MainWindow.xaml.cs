@@ -90,7 +90,7 @@ namespace MHCI.Hackathon.App
                 default:
                     break;
             }
-            Console.WriteLine("Player left: " + e);
+            //Console.WriteLine("Player left: " + e);
             MakeJSCall("playerLeft", e);
         }
 
