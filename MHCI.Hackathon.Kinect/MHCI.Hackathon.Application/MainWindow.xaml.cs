@@ -64,7 +64,7 @@ namespace MHCI.Hackathon.App
             _song_layer3 = new Model.Song("Keyboards", "Keyboards.mp3");
             _song_layer4 = new Model.Song("Vocals", "Vocals.mp3");
 
-        }
+            }
 
         bool canMakeCalls = false;
         void browser_Navigated(object sender, NavigationEventArgs e)
