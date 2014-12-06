@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Windows.Forms.Integration;
 using MHCI.Hackathon.App.Kinect;
 using IrrKlang;
+using System.IO;
 
 namespace MHCI.Hackathon.App
 {
@@ -45,8 +46,8 @@ namespace MHCI.Hackathon.App
         {
             InitializeComponent();
 
-            //_playerInputEngine = new KinectInput();
-            _playerInputEngine = new AutomatedInput();
+            _playerInputEngine = new KinectInput();
+            //_playerInputEngine = new AutomatedInput();
             _playerInputEngine.PlayerActionsChanged += _playerInputEngine_PlayerActionsChanged;
             _playerInputEngine.PlayerJoined += _playerInputEngine_PlayerJoined;
             _playerInputEngine.PlayerLeft += _playerInputEngine_PlayerLeft;
@@ -69,6 +70,9 @@ namespace MHCI.Hackathon.App
 
             //_sound_layer2 = this._engine.Play2D(_song_layer2.FileLocation, false);
             //_sound_layer2.Volume = 0;
+            string curDir = Directory.GetCurrentDirectory();
+
+            browser.Navigate("http://localhost:3001");
 
             //_sound_layer3 = this._engine.Play2D(_song_layer3.FileLocation, false);
             //_sound_layer3.Volume = 0;
@@ -106,7 +110,9 @@ namespace MHCI.Hackathon.App
         {
             foreach (var action in e)
             {
-                
+
+                MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
+                //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
             }
         }
         #endregion
