@@ -32,8 +32,8 @@ namespace MHCI.Hackathon.App
         {
             InitializeComponent();
 
-            //_playerInputEngine = new KinectInput();
-            _playerInputEngine = new AutomatedInput();
+            _playerInputEngine = new KinectInput();
+            //_playerInputEngine = new AutomatedInput();
             _playerInputEngine.PlayerActionsChanged += _playerInputEngine_PlayerActionsChanged;
             _playerInputEngine.PlayerJoined += _playerInputEngine_PlayerJoined;
             _playerInputEngine.PlayerLeft += _playerInputEngine_PlayerLeft;
@@ -71,7 +71,7 @@ namespace MHCI.Hackathon.App
                 
 
 
-                //MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
+                MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
                 //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
             }
         }
