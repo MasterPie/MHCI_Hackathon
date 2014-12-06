@@ -23,28 +23,45 @@ namespace MHCI.Hackathon.App
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         private IPlayerInput _playerInputEngine;
-        private Model.MusicPlayer _musicPlayer;
+
+        private ISound _sound_layer1;
+        private ISound _sound_layer2;
+        private ISound _sound_layer3;
+        private ISound _sound_layer4;
+        private Boolean isPlaying;
+        ISoundEngine _engine;
 
         public MainWindow()
         {
             InitializeComponent();
+            isPlaying = false;
+            this._engine = new ISoundEngine();
 
-            //_playerInputEngine = new KinectInput();
             _playerInputEngine = new AutomatedInput();
             _playerInputEngine.PlayerActionsChanged += _playerInputEngine_PlayerActionsChanged;
             _playerInputEngine.PlayerJoined += _playerInputEngine_PlayerJoined;
             _playerInputEngine.PlayerLeft += _playerInputEngine_PlayerLeft;
 
-            String relativePath = "ChristmasSong.mp3";
-            var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string absolutePath = appDirectory + relativePath;
-            Model.Song song = new Model.Song("Song", absolutePath);
-            _musicPlayer = new Model.MusicPlayer();
 
-            uint length = _musicPlayer.Play(song, false);
-            
+            Model.Song song_layer1 = new Model.Song("Rhythm", "Rhythm.mp3");
+            _sound_layer1 = this._engine.Play2D(song_layer1.FileLocation, false);
+            //_sound_layer1 = this._engine.Play3D(song_layer1.FileLocation, 0, 0, 0);
+            _sound_layer1.Volume = .1f;
+
+            Model.Song song_layer2 = new Model.Song("Organs", "Organs.mp3");
+            _sound_layer2 = this._engine.Play2D(song_layer2.FileLocation, false);
+            _sound_layer1.Volume = 0;
+
+            Model.Song song_layer3 = new Model.Song("Keyboards", "Keyboards.mp3");
+            _sound_layer3 = this._engine.Play2D(song_layer3.FileLocation, false);
+            _sound_layer3.Volume = 0;
+
+            Model.Song song_layer4 = new Model.Song("Vocals", "Vocals.mp3");
+            _sound_layer4 = this._engine.Play2D(song_layer4.FileLocation, false);
+            _sound_layer4.Volume = 0;
+            //_sound_layer4.PlaybackSpeed = .6f;
         }
 
 
@@ -56,6 +73,31 @@ namespace MHCI.Hackathon.App
 
         void _playerInputEngine_PlayerJoined(object sender, int e)
         {
+            if (!isPlaying)
+            {
+                //start all tracks
+                Model.Song song_layer1 = new Model.Song("Rhythm","Rhythm.mp3");
+                _sound_layer1 = this._engine.Play2D(song_layer1.FileLocation, false);
+
+                Model.Song song_layer2 = new Model.Song("Organs", "Organs.mp3");
+                _sound_layer2 = this._engine.Play2D(song_layer2.FileLocation, false);
+                _sound_layer1.Volume = 0;
+               
+                Model.Song song_layer3 = new Model.Song("Keyboards", "Keyboards.mp3");
+                _sound_layer3 = this._engine.Play2D(song_layer3.FileLocation, false);
+                _sound_layer3.Volume = 0;
+
+                Model.Song song_layer4 = new Model.Song("Vocals", "Vocals.mp3");
+                _sound_layer4 = this._engine.Play2D(song_layer4.FileLocation, false);
+                _sound_layer4.Volume = 0;
+                
+
+                isPlaying = true;
+            }
+            else
+            {
+                //raise volume of player that joined
+            }
             //throw new NotImplementedException();
         }
 
@@ -63,15 +105,13 @@ namespace MHCI.Hackathon.App
         {
             foreach (var action in e)
             {
-                //String relativePath = "../../../../../../../Desktop/ChristmasSong";
-                
-
-
+ 
                 //MakeJSCall("acceptAction", action.Player.Id, action.Volume, action.Craziness);
                 //Console.WriteLine("Player {0} Volume {1} Craziness {2}", action.Player.Id, action.Volume, action.Craziness);
             }
         }
         #endregion
+
 
         #region WebKitBrowser Routines
         /// <summary>
