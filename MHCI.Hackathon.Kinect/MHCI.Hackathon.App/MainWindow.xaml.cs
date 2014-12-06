@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms.Integration;
 using MHCI.Hackathon.App.Kinect;
+using IrrKlang;
 
 namespace MHCI.Hackathon.App
 {
@@ -35,15 +36,17 @@ namespace MHCI.Hackathon.App
             _playerInputEngine.PlayerActionsChanged += _playerInputEngine_PlayerActionsChanged;
             _playerInputEngine.PlayerJoined += _playerInputEngine_PlayerJoined;
             _playerInputEngine.PlayerLeft += _playerInputEngine_PlayerLeft;
-            
+
             String relativePath = "ChristmasSong.mp3";
             var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string absolutePath = appDirectory + relativePath;
             Model.Song song = new Model.Song("Song", absolutePath);
             _musicPlayer = new Model.MusicPlayer();
 
-            _musicPlayer.Play(song, true);
+            uint length = _musicPlayer.Play(song, false);
+            
         }
+
 
         #region Kinect Events
         void _playerInputEngine_PlayerLeft(object sender, int e)
