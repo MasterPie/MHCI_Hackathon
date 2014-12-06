@@ -8,6 +8,11 @@ namespace MHCI.Hackathon.App.Model
 {
     class Song
     {
+        public Song(string name, string fileLocation)
+        {
+            this._name = name;
+            this._fileLocation = fileLocation;
+        } 
         private string _fileLocation;
         public string FileLocation
         {
