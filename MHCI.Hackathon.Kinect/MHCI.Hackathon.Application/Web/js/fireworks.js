@@ -74,15 +74,15 @@
       // document.addEventListener('touchend', createFirework, true);
       setInterval(function(){createFirework();},2000);
 
-      // if (playerInfo.player === 1) {
-      //   mainCanvas.style.zIndex="1";
-      // } else if (playerInfo.player === 2) {
-      //   mainCanvas.style.zIndex="1";
-      // } else if (playerInfo.player === 3) {
-      //   mainCanvas.style.zIndex="1";
-      // } else if (playerInfo.player === 4) {
-      //   mainCanvas.style.zIndex="1";
-      // }
+      if (playerInfo.player === 1) {
+        mainCanvas.style.zIndex="4";
+      } else if (playerInfo.player === 2) {
+        mainCanvas.style.zIndex="3";
+      } else if (playerInfo.player === 3) {
+        mainCanvas.style.zIndex="2";
+      } else if (playerInfo.player === 4) {
+        mainCanvas.style.zIndex="1";
+      }
 
       // and now we set off
       update();
@@ -150,7 +150,6 @@
     function update() {
       clearContext();
       requestAnimFrame(update);
-      // createFirework();
       drawFireworks();
     }
 
