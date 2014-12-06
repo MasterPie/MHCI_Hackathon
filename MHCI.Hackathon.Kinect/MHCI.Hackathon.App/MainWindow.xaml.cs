@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Windows.Forms.Integration;
 using MHCI.Hackathon.App.Kinect;
 using IrrKlang;
+using System.IO;
 
 namespace MHCI.Hackathon.App
 {
@@ -27,8 +28,6 @@ namespace MHCI.Hackathon.App
         private IPlayerInput _playerInputEngine;
         private Model.MusicPlayer _musicPlayer;
 
-        private ISoundEngine _engine;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -39,7 +38,9 @@ namespace MHCI.Hackathon.App
             _playerInputEngine.PlayerJoined += _playerInputEngine_PlayerJoined;
             _playerInputEngine.PlayerLeft += _playerInputEngine_PlayerLeft;
 
-            browser.Navigate("");
+            string curDir = Directory.GetCurrentDirectory();
+
+            browser.Navigate(String.Format("file:///{0}/Web/index.html", curDir));
 
             String relativePath = "ChristmasSong.mp3";
             var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
