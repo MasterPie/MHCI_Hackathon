@@ -463,7 +463,7 @@ function playerLeft(playerNum) {
         d.updateValues(4, 0, 0, false);
 }
 
-// acceptAction(1,10,10);
-// setTimeout(function(){acceptAction(1, 5, 5);},3000);
+//acceptAction(1,10,10);
+//setTimeout(function(){acceptAction(1, 5, 5);},3000);
 // setTimeout(function(){acceptAction(2,10,10);},5000);
 // setTimeout(function(){playerLeft(1);},10000);

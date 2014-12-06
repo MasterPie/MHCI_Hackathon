@@ -195,7 +195,7 @@ namespace MHCI.Hackathon.App.Kinect
                 //max 2
                 // y = 1 + (x-A)*(10-1)/(B-A)
                 //Console.WriteLine(totalDist * 100);
-                var scaledDist = totalDist * 100;
+                var scaledDist = totalDist * 100 - 5;
 
                 if (scaledDist > 10)
                     scaledDist = 10;
